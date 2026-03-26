@@ -362,6 +362,7 @@ const S = {
   threshold: 0.75,
   expanded: new Set(),
   rawFile: null,
+  locList: [],       // ordered list of location names for onclick index lookup
 };
 
 /* ─── Accessors ─── */
@@ -433,21 +434,21 @@ function updateSubtitles() {
 function renderLocTable() {
   const map  = byLocation();
   const locs = Object.keys(map).sort((a, b) => {
-    // sort by hit% descending
     const sa = locStats(map[a]), sb = locStats(map[b]);
     return pct(sb.hit, sb.total) - pct(sa.hit, sa.total);
   });
 
+  S.locList = locs; // store for onclick index lookup
   document.getElementById('loc-count-badge').textContent = locs.length + ' locations';
 
   let html = '';
-  locs.forEach(loc => {
+  locs.forEach((loc, idx) => {
     const users = map[loc];
     const st = locStats(users);
     const isExp = S.expanded.has(loc);
     const expCls = isExp ? ' expanded' : '';
 
-    html += `<tr class="loc-row${expCls}" data-loc="${esc(loc)}">
+    html += `<tr class="loc-row${expCls}" onclick="toggleLoc(${idx})" style="cursor:pointer">
       <td><span class="loc-name">${esc(loc)}</span><span class="expand-icon">▾</span></td>
       <td class="r mono">${st.total}</td>
       <td class="r">${pctPill(st.started, st.total)}</td>
@@ -509,15 +510,14 @@ function renderLocTable() {
   document.getElementById('loc-tbody').innerHTML = html;
 }
 
-/* ─── Toggle expand (event delegation) ─── */
-document.getElementById('loc-tbody').addEventListener('click', e => {
-  const row = e.target.closest('.loc-row');
-  if (!row) return;
-  const loc = row.dataset.loc;
+/* ─── Toggle expand ─── */
+function toggleLoc(idx) {
+  const loc = S.locList[idx];
+  if (!loc) return;
   if (S.expanded.has(loc)) S.expanded.delete(loc);
   else S.expanded.add(loc);
   renderLocTable();
-});
+}
 
 /* ─── Assignments card ─── */
 function renderAssignCard() {
