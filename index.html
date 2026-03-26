@@ -42,151 +42,86 @@
     from { opacity: 0; transform: translateY(7px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .ain  { animation: slide-up-in 280ms ease-out both; }
-  .d1   { animation-delay: 40ms; }
-  .d2   { animation-delay: 80ms; }
-  .d3   { animation-delay: 120ms; }
-  .d4   { animation-delay: 160ms; }
-  .d5   { animation-delay: 200ms; }
-  .d6   { animation-delay: 240ms; }
+  .ain { animation: slide-up-in 280ms ease-out both; }
+  .d1  { animation-delay: 40ms; }
+  .d2  { animation-delay: 80ms; }
+  .d3  { animation-delay: 120ms; }
 
   /* ── Header ── */
   #site-header {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    height: 52px;
-    background: #fff;
+    position: sticky; top: 0; z-index: 30;
+    height: 52px; background: #fff;
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 0 1.25rem;
   }
   .hdr-left { display: flex; align-items: center; gap: 0.625rem; }
   .hdr-icon {
-    width: 28px; height: 28px;
-    background: var(--teal);
+    width: 28px; height: 28px; background: var(--teal);
     border-radius: var(--radius);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .hdr-icon svg { fill: #fff; }
-  .hdr-title {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.1;
-  }
-  .hdr-sub {
-    font-size: 0.68rem;
-    color: rgba(38,49,76,0.5);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  #hdr-status {
-    font-size: 0.72rem;
-    color: rgba(38,49,76,0.5);
-    font-family: var(--font-mono);
-  }
+  .hdr-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+  .hdr-sub   { font-size: 0.68rem; color: rgba(38,49,76,0.5); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+  #hdr-status { font-size: 0.72rem; color: rgba(38,49,76,0.5); font-family: var(--font-mono); }
 
   /* ── Filter Bar ── */
   #filter-bar {
-    position: sticky;
-    top: 52px;
-    z-index: 20;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    display: none;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0 1.25rem;
-    height: 48px;
-    overflow-x: auto;
+    position: sticky; top: 52px; z-index: 20;
+    background: #fff; border-bottom: 1px solid var(--border);
+    display: none; align-items: center; gap: 0.75rem;
+    padding: 0 1.25rem; height: 48px; overflow-x: auto;
   }
   #filter-bar.visible { display: flex; }
   .fbar-divider { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
   .fbar-label {
     font-size: 0.7rem; font-weight: 600;
-    color: rgba(38,49,76,0.5);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .fsel {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.3rem 0.55rem;
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    color: var(--navy);
-    background: #fff;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    flex-shrink: 0;
-  }
-  .fsel:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(39,189,190,0.12); }
-  input[type=range] { accent-color: var(--teal); width: 100px; cursor: pointer; flex-shrink: 0; }
-  .threshold-val {
-    font-family: var(--font-mono);
-    font-size: 0.78rem; font-weight: 600;
-    color: var(--navy); min-width: 34px; flex-shrink: 0;
+    color: rgba(38,49,76,0.5); text-transform: uppercase;
+    letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
   }
   .fbar-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+  /* ── Toggle Pills ── */
+  .toggle-group { display: flex; background: rgba(38,49,76,0.06); border-radius: 6px; padding: 2px; gap: 2px; flex-shrink: 0; }
+  .tpill {
+    border: none; background: transparent; cursor: pointer;
+    padding: 0.22rem 0.75rem; border-radius: 4px;
+    font-family: var(--font-body); font-size: 0.78rem; font-weight: 600;
+    color: rgba(38,49,76,0.55); transition: all 0.15s; white-space: nowrap;
+  }
+  .tpill.active { background: #fff; color: var(--navy); box-shadow: 0 1px 3px rgba(38,49,76,0.1); }
+
+  /* ── Slider ── */
+  input[type=range] { accent-color: var(--teal); width: 90px; cursor: pointer; flex-shrink: 0; }
+  .threshold-val { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--navy); min-width: 34px; flex-shrink: 0; }
+
+  /* ── Buttons ── */
   .btn {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.3rem 0.75rem;
-    font-family: var(--font-body);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 0.3rem 0.75rem; font-family: var(--font-body);
     font-size: 0.78rem; font-weight: 500;
-    background: #fff; color: var(--navy);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
-    white-space: nowrap;
+    background: #fff; color: var(--navy); cursor: pointer;
+    transition: border-color 0.15s, background 0.15s; white-space: nowrap;
   }
   .btn:hover { border-color: var(--navy); }
   .btn-teal { background: var(--teal); border-color: var(--teal); color: #fff; }
   .btn-teal:hover { background: #1fa7a8; border-color: #1fa7a8; }
   .btn-teal:disabled { opacity: 0.45; cursor: not-allowed; }
 
-  /* ── Main ── */
-  #main-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
   /* ── Upload ── */
-  #upload-section {
-    max-width: 560px;
-    margin: 3rem auto;
-    text-align: center;
-    padding: 0 1.25rem;
-  }
-  .upload-title {
-    font-family: var(--font-display);
-    font-size: 2.2rem; font-weight: 700;
-    color: var(--navy); line-height: 1.1;
-    margin-bottom: 0.4rem;
-  }
+  #upload-section { display: block; }
+  .upload-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: var(--navy); line-height: 1.1; margin-bottom: 0.4rem; }
   .upload-sub { font-size: 0.82rem; color: rgba(38,49,76,0.55); margin-bottom: 1.75rem; }
   .upzone {
-    border: 2px dashed var(--border);
-    border-radius: 8px;
-    padding: 2.5rem 2rem;
-    cursor: pointer;
+    border: 2px dashed var(--border); border-radius: 8px;
+    padding: 2.5rem 2rem; cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
-    background: #fff;
-    margin-bottom: 1rem;
+    background: #fff; margin-bottom: 1rem;
   }
-  .upzone:hover  { border-color: var(--teal); background: rgba(39,189,190,0.025); }
-  .upzone.loaded { border: 2px solid var(--teal); background: rgba(39,189,190,0.04); }
-  .upzone.drag-over { border-color: var(--teal); background: rgba(39,189,190,0.06); }
+  .upzone:hover    { border-color: var(--teal); background: rgba(39,189,190,0.025); }
+  .upzone.loaded   { border: 2px solid var(--teal); background: rgba(39,189,190,0.04); }
+  .upzone.drag-over{ border-color: var(--teal); background: rgba(39,189,190,0.06); }
   .upzone-icon  { font-size: 2rem; margin-bottom: 0.75rem; line-height: 1; }
   .upzone-label { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
   .upzone-hint  { font-size: 0.75rem; color: rgba(38,49,76,0.45); }
@@ -196,249 +131,100 @@
   /* ── Dashboard ── */
   #dashboard { display: none; }
   #dashboard.visible { display: block; }
+  #main-container { max-width: 1000px; margin: 0 auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
 
   /* ── Card ── */
-  .card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
+  .card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
   .card-hd {
     padding: 0.875rem 1rem;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
-    cursor: pointer; user-select: none;
-    transition: background 0.12s;
   }
-  .card-hd:hover { background: rgba(38,49,76,0.013); }
-  .card-hd-left { display: flex; align-items: center; gap: 0.6rem; }
-  .card-hd-right { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 1.1rem; font-weight: 700;
-    color: var(--navy); line-height: 1.1;
-  }
-  .card-sub { font-size: 0.72rem; color: rgba(38,49,76,0.5); margin-top: 0.1rem; }
-  .card-bd { padding: 1rem; }
-  .card-bd.hidden { display: none; }
-  .chev {
-    width: 14px; height: 14px;
-    color: rgba(38,49,76,0.35);
-    transition: transform 0.2s; flex-shrink: 0;
-  }
-  .chev.open { transform: rotate(180deg); }
+  .card-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+  .card-sub   { font-size: 0.72rem; color: rgba(38,49,76,0.5); margin-top: 0.1rem; }
+  .card-bd    { padding: 0; }
 
-  /* ── Defbox ── */
-  .defbox {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--teal);
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-    font-size: 0.8rem;
-    color: rgba(38,49,76,0.7);
-    line-height: 1.6;
-    box-shadow: var(--shadow);
-  }
-  .defbox strong { color: var(--navy); }
-
-  /* ── Metric Cards ── */
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.875rem;
-  }
-  @media (max-width: 700px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
-  .metric {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem;
-    box-shadow: var(--shadow);
-  }
-  .metric-val {
-    font-family: var(--font-display);
-    font-size: 2.2rem; font-weight: 700;
-    color: var(--navy); line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-  .metric-lbl {
-    font-size: 0.68rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.07em;
-    color: rgba(38,49,76,0.5); margin-bottom: 0.15rem;
-  }
-  .metric-sub { font-size: 0.72rem; color: rgba(38,49,76,0.45); }
-  .metric-val.c-teal { color: var(--teal); }
-  .metric-val.c-gold  { color: #b38600; }
-  .metric-val.c-red   { color: var(--red); }
-
-  /* ── Explainer ── */
-  .explainer-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.75rem;
-  }
-  @media (max-width: 900px) { .explainer-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 600px) { .explainer-grid { grid-template-columns: 1fr 1fr; } }
-  .exp-box { border-radius: var(--radius); padding: 0.85rem; border: 1px solid transparent; }
-  .exp-num { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
-  .exp-title { font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; letter-spacing: 0.02em; }
-  .exp-desc { font-size: 0.72rem; color: rgba(38,49,76,0.65); line-height: 1.55; }
-
-  /* ── Tables ── */
+  /* ── Table ── */
   .tbl-wrap { overflow-x: auto; }
   .tbl { width: 100%; border-collapse: collapse; }
   .tbl th {
     background: rgba(38,49,76,0.025);
-    color: rgba(38,49,76,0.55);
-    font-weight: 600; font-size: 0.65rem;
-    text-transform: uppercase; letter-spacing: 0.07em;
-    padding: 0.6rem 0.75rem; text-align: left;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
+    color: rgba(38,49,76,0.5); font-weight: 600;
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 0.6rem 0.9rem; text-align: left;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
   }
+  .tbl th.r { text-align: right; }
   .tbl td {
-    padding: 0.6rem 0.75rem;
+    padding: 0.65rem 0.9rem;
     border-bottom: 1px solid rgba(38,49,76,0.05);
-    vertical-align: middle; font-size: 0.8rem;
+    vertical-align: middle; font-size: 0.82rem;
   }
+  .tbl td.r { text-align: right; }
   .tbl tr:last-child td { border-bottom: none; }
-  .tbl tr:hover td { background: rgba(39,189,190,0.025); }
-  .tbl-name { font-weight: 600; color: var(--navy); font-size: 0.82rem; }
-  .tbl-email { font-size: 0.69rem; color: rgba(38,49,76,0.45); font-family: var(--font-mono); }
-  .mono { font-family: var(--font-mono); font-size: 0.78rem; }
 
-  /* ── Badges ── */
-  .badge {
-    display: inline-block;
-    padding: 0.18rem 0.55rem;
-    border-radius: 99px;
-    font-size: 0.66rem; font-weight: 600;
-    white-space: nowrap;
+  /* ── Location row (clickable) ── */
+  .loc-row { cursor: pointer; transition: background 0.1s; }
+  .loc-row:hover td { background: rgba(39,189,190,0.03); }
+  .loc-row.expanded td { background: rgba(39,189,190,0.05); border-bottom: none; }
+  .loc-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; }
+  .expand-icon { color: rgba(38,49,76,0.35); transition: transform 0.2s; display: inline-block; font-size: 0.7rem; margin-left: 0.4rem; }
+  .loc-row.expanded .expand-icon { transform: rotate(180deg); }
+
+  /* ── Expanded sub-table ── */
+  .sub-row td {
+    background: rgba(39,189,190,0.025);
+    border-bottom: 1px solid rgba(39,189,190,0.08);
+    padding: 0.5rem 0.9rem;
+    font-size: 0.79rem;
   }
-  .b-teal  { background: rgba(39,189,190,0.12);  color: #0f8788; }
-  .b-gold  { background: rgba(255,194,14,0.15);   color: #8a6300; }
-  .b-red   { background: rgba(220,38,38,0.1);    color: var(--red); }
-  .b-amber { background: rgba(245,158,11,0.12);  color: #92400e; }
-  .b-gray  { background: rgba(38,49,76,0.07);    color: rgba(38,49,76,0.6); }
-  .b-green { background: rgba(16,185,129,0.1);   color: #065f46; }
-  .b-navy  { background: rgba(38,49,76,0.12);    color: var(--navy); }
+  .sub-row:last-child td { border-bottom: 1px solid rgba(38,49,76,0.06); }
+  .sub-row td:first-child { padding-left: 2.5rem; }
+  .sub-name { color: var(--navy); font-weight: 500; }
+  .sub-meta { font-size: 0.68rem; color: rgba(38,49,76,0.4); margin-top: 0.1rem; }
 
-  /* ── TAR Pills ── */
-  .tar {
+  /* ── Progress inline ── */
+  .prog-wrap { display: flex; align-items: center; gap: 0.5rem; }
+  .prog-bar  { flex: 1; height: 5px; background: rgba(38,49,76,0.08); border-radius: 99px; overflow: hidden; min-width: 60px; }
+  .prog-fill { height: 100%; border-radius: 99px; background: var(--teal); transition: width 0.3s; }
+  .prog-fill.warn { background: var(--gold); }
+  .prog-fill.low  { background: rgba(38,49,76,0.18); }
+  .prog-pct  { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(38,49,76,0.6); white-space: nowrap; min-width: 32px; }
+
+  /* ── Mono numbers ── */
+  .mono { font-family: var(--font-mono); font-size: 0.8rem; }
+  .pct-pill {
     display: inline-flex; align-items: center;
-    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
-    border-radius: 99px; padding: 0.2rem 0.6rem;
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
+    border-radius: 99px; padding: 0.18rem 0.55rem;
     border: 1px solid transparent; white-space: nowrap;
   }
-  .tar-hi { background: rgba(39,189,190,0.12); color: #0f8788; border-color: rgba(39,189,190,0.25); }
-  .tar-md { background: rgba(255,194,14,0.15);  color: #8a6300; border-color: rgba(255,194,14,0.3); }
-  .tar-lo { background: rgba(220,38,38,0.1);   color: var(--red); border-color: rgba(220,38,38,0.2); }
+  .pct-hi  { background: rgba(39,189,190,0.12); color: #0f8788; border-color: rgba(39,189,190,0.25); }
+  .pct-md  { background: rgba(255,194,14,0.15);  color: #8a6300; border-color: rgba(255,194,14,0.3); }
+  .pct-lo  { background: rgba(220,38,38,0.1);   color: var(--red); border-color: rgba(220,38,38,0.2); }
 
-  /* ── Band Bar ── */
-  .band-wrap {
-    display: flex; height: 8px;
-    border-radius: 4px; overflow: hidden;
-    gap: 1px; min-width: 120px;
-  }
-  .band-seg { height: 100%; flex-shrink: 0; }
-  .band-counts {
-    font-family: var(--font-mono); font-size: 0.65rem;
-    color: rgba(38,49,76,0.45); margin-top: 0.2rem;
-    white-space: nowrap;
-  }
+  /* ── Check / dash ── */
+  .chk    { color: #0f8788; font-size: 0.85rem; }
+  .dash   { color: rgba(38,49,76,0.25); }
 
-  /* ── Progress Bar ── */
-  .pbar { height: 5px; background: rgba(38,49,76,0.08); border-radius: 99px; overflow: hidden; }
-  .pbar-fill { height: 100%; border-radius: 99px; transition: width 0.3s; }
-  .pbar-teal { background: var(--teal); }
-  .pbar-red  { background: var(--red); }
-  .pbar-gold { background: var(--gold); }
-  .pbar-navy { background: rgba(38,49,76,0.3); }
+  /* ── Assignments card list ── */
+  .assign-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid rgba(38,49,76,0.05); }
+  .assign-row:last-child { border-bottom: none; }
+  .assign-loc  { font-size: 0.82rem; font-weight: 500; color: var(--navy); }
+  .assign-val  { font-family: var(--font-mono); font-size: 0.82rem; color: var(--navy); font-weight: 600; }
+  .assign-bar-wrap { flex: 1; margin: 0 1rem; height: 5px; background: rgba(38,49,76,0.07); border-radius: 99px; overflow: hidden; }
+  .assign-bar-fill { height: 100%; border-radius: 99px; background: rgba(38,49,76,0.2); }
 
-  /* ── Legend ── */
-  .legend {
-    display: flex; align-items: center;
-    gap: 1rem; flex-wrap: wrap;
-    padding-top: 0.75rem; margin-top: 0.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: rgba(38,49,76,0.6); }
-  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
-
-  /* ── At-Risk ── */
-  .atr-loc { margin-bottom: 0.875rem; }
-  .atr-loc-hd {
-    display: flex; align-items: center; gap: 0.5rem;
-    margin-bottom: 0.4rem;
-    font-size: 0.8rem; font-weight: 600; color: var(--navy);
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .chip {
-    display: inline-block;
-    padding: 0.15rem 0.5rem;
-    border-radius: 99px;
-    background: rgba(220,38,38,0.08);
-    color: var(--red); font-size: 0.7rem; font-weight: 500;
-    border: 1px solid rgba(220,38,38,0.15);
-  }
-  .chip.more {
-    background: rgba(38,49,76,0.06);
-    color: rgba(38,49,76,0.5);
-    border-color: var(--border);
-  }
-
-  /* ── Top Learners ── */
-  .learner-row {
-    display: flex; align-items: flex-start; gap: 0.75rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(38,49,76,0.05);
-  }
-  .learner-row:last-child { border-bottom: none; }
-  .learner-rank {
-    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
-    color: rgba(38,49,76,0.35); width: 20px; text-align: right;
-    flex-shrink: 0; padding-top: 1px;
-  }
-  .learner-info { flex: 1; min-width: 0; }
-  .learner-name { font-weight: 600; font-size: 0.82rem; color: var(--navy); }
-  .learner-meta { font-size: 0.69rem; color: rgba(38,49,76,0.45); margin-top: 0.15rem; }
-  .learner-time { font-family: var(--font-mono); font-size: 0.78rem; color: var(--navy); font-weight: 600; white-space: nowrap; }
-
-  /* ── Bottom Row ── */
-  .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-  @media (max-width: 700px) { .bottom-row { grid-template-columns: 1fr; } }
-
-  /* ── Individual Controls ── */
-  .indiv-controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-  .fsearch {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.3rem 0.55rem;
-    font-family: var(--font-body); font-size: 0.78rem;
-    color: var(--navy); outline: none; width: 160px;
-    background: #fff; transition: border-color 0.15s;
-  }
-  .fsearch:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(39,189,190,0.12); }
-
-  /* ── Count Badge ── */
-  .cnt-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    background: rgba(38,49,76,0.07);
-    color: rgba(38,49,76,0.6);
-    border-radius: 99px;
-    font-size: 0.65rem; font-weight: 600;
-    padding: 0.1rem 0.5rem;
-    font-family: var(--font-mono);
-  }
+  /* ── Empty state ── */
+  .empty { text-align: center; padding: 2.5rem; color: rgba(38,49,76,0.35); font-size: 0.82rem; }
 
   /* ── Misc ── */
-  .txt-muted { color: rgba(38,49,76,0.4); }
-  .txt-sm    { font-size: 0.75rem; }
-  .empty-state { text-align: center; padding: 2rem; color: rgba(38,49,76,0.4); font-size: 0.82rem; }
-  .section-note { font-size: 0.72rem; color: rgba(38,49,76,0.4); padding: 0.5rem 0 0; text-align: right; }
+  .cnt-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(38,49,76,0.07); color: rgba(38,49,76,0.6);
+    border-radius: 99px; font-size: 0.65rem; font-weight: 600;
+    padding: 0.1rem 0.5rem; font-family: var(--font-mono);
+  }
 </style>
 </head>
 <body>
@@ -459,24 +245,17 @@
 
 <!-- ── Filter Bar ── -->
 <div id="filter-bar">
-  <span class="fbar-label">Location</span>
-  <select class="fsel" id="f-loc" onchange="applyFilters()">
-    <option value="">All Locations</option>
-  </select>
-  <span class="fbar-label">Dept</span>
-  <select class="fsel" id="f-dept" onchange="applyFilters()">
-    <option value="">All Depts</option>
-  </select>
+  <div class="toggle-group">
+    <button class="tpill active" id="pill-courses" onclick="setMode('courses')">Courses</button>
+    <button class="tpill"        id="pill-lps"     onclick="setMode('lps')">Learning Paths</button>
+  </div>
   <div class="fbar-divider"></div>
-  <span class="fbar-label" title="A person 'passes' when they complete this % of their assigned courses">Someone passes when they complete</span>
-  <input type="range" id="threshold-slider" min="50" max="95" step="5" value="75"
-         oninput="updateThreshold(this.value)" />
+  <span class="fbar-label">Counts as passed at</span>
+  <input type="range" id="threshold-slider" min="50" max="95" step="5" value="75" oninput="updateThreshold(this.value)" />
   <span class="threshold-val" id="threshold-label">75%</span>
-  <span class="fbar-label">of their courses</span>
-  <div class="fbar-divider"></div>
+  <span class="fbar-label">completion</span>
   <div class="fbar-right">
-    <button class="btn" onclick="resetFilters()">Reset</button>
-    <button class="btn btn-teal" onclick="showUpload()">&#8593; New file</button>
+    <button class="btn" onclick="showUpload()">&#8593; New file</button>
   </div>
 </div>
 
@@ -486,7 +265,6 @@
     <div class="upload-title ain" style="text-align:center;">Upload Metrics Report</div>
     <p class="upload-sub ain d1" style="text-align:center;">Drop the <strong>LMS User Metrics Report.csv</strong> to generate the analytics dashboard.</p>
 
-    <!-- How to prepare the file -->
     <div class="ain d2" style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;text-align:left;">
       <div style="font-family:'Instrument Sans',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(38,49,76,0.45);margin-bottom:0.65rem;">How to prepare this file</div>
       <ol style="margin:0;padding-left:1.2rem;font-size:0.84rem;color:rgba(38,49,76,0.75);line-height:1.75;">
@@ -524,8 +302,8 @@
       <div id="fname"></div>
     </div>
     <input type="file" id="file-input" accept=".csv,text/csv" onchange="handleFile(event)" />
-    <button class="btn btn-teal ain d4" id="process-btn" disabled onclick="processData()"
-            style="width:100%;padding:0.65rem;font-size:0.88rem;">
+    <button class="btn btn-teal ain d3" id="process-btn" disabled onclick="processData()"
+            style="width:100%;padding:0.65rem;font-size:0.88rem;margin-top:0.5rem;">
       Process Report
     </button>
   </div>
@@ -535,787 +313,309 @@
 <div id="dashboard">
   <div id="main-container">
 
-    <!-- Defbox -->
-    <div class="defbox ain" id="defbox-wrap">
-      <strong>Active</strong> = logged in or spent any time on the platform. &nbsp;
-      <strong>Started</strong> = opened at least one course or learning path. &nbsp;
-      <strong>Never started</strong> = has courses assigned but hasn&rsquo;t opened anything yet &mdash; needs a nudge. &nbsp;
-      <strong>Passed</strong> = completed enough courses to hit the pass mark (set with the slider above).
-    </div>
-
-    <!-- Overview -->
-    <div class="metrics-grid" id="overview-grid"></div>
-
-    <!-- 5-Metric Explainer (no collapse) -->
-    <div class="card ain d1" id="explainer-card">
-      <div class="card-hd" style="cursor:default;">
-        <div>
-          <div class="card-title">How to read each location</div>
-          <div class="card-sub">Five numbers that together tell you whether a location is on track &mdash; and what type of problem it has.</div>
-        </div>
-      </div>
-      <div class="card-bd" id="explainer-card-bd">
-        <div class="explainer-grid">
-          <div class="exp-box" style="background:rgba(39,189,190,0.07);border-color:rgba(39,189,190,0.2);">
-            <div class="exp-num" style="color:var(--teal);">① Passed</div>
-            <div class="exp-title">% who hit the pass mark</div>
-            <div class="exp-desc">The &ldquo;can this location move on?&rdquo; number. Unlike an average, 2 star performers completing 100% can&rsquo;t make this look good if everyone else is at 0%.</div>
-          </div>
-          <div class="exp-box" style="background:rgba(220,38,38,0.06);border-color:rgba(220,38,38,0.15);">
-            <div class="exp-num" style="color:var(--red);">② Never Started</div>
-            <div class="exp-title">% who haven&rsquo;t opened anything</div>
-            <div class="exp-desc">These people haven&rsquo;t touched a single course. They need a reminder or push to get going &mdash; very different from someone who started but got stuck halfway.</div>
-          </div>
-          <div class="exp-box" style="background:rgba(255,194,14,0.1);border-color:rgba(255,194,14,0.25);">
-            <div class="exp-num" style="color:#8a6300;">③ Typical person</div>
-            <div class="exp-title">What the middle of the team has done</div>
-            <div class="exp-desc">The middle score &mdash; not an average. If 2 people are at 100% and 48 are at 5%, the average looks like 9% but the middle score honestly shows 5%.</div>
-          </div>
-          <div class="exp-box" style="background:rgba(38,49,76,0.04);border-color:rgba(38,49,76,0.1);">
-            <div class="exp-num" style="color:rgba(38,49,76,0.55);">④ Team spread</div>
-            <div class="exp-title">How the team is divided</div>
-            <div class="exp-desc">Breaks the team into 4 buckets: not started / barely started / almost there / passed. Shows whether the problem is getting people to start, or getting them to finish.</div>
-          </div>
-          <div class="exp-box" style="background:rgba(16,185,129,0.07);border-color:rgba(16,185,129,0.18);">
-            <div class="exp-num" style="color:#065f46;">⑤ Starters who passed</div>
-            <div class="exp-title">Of those who began, how many finished</div>
-            <div class="exp-desc">If this is high but few people overall passed, you just need to get more people to open their first course. If this is low, people are starting but dropping off.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Location Performance -->
-    <div class="card ain d2" id="loc-card">
-      <div class="card-hd" onclick="toggleCard('loc-card')">
+    <div class="card ain">
+      <div class="card-hd">
         <div>
           <div class="card-title">Location Performance</div>
-          <div class="card-sub">Ranked by who has the most people passing &mdash; change the pass mark with the slider above</div>
+          <div class="card-sub" id="loc-card-sub">Click any row to see the people inside it</div>
         </div>
-        <svg class="chev open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        <span class="cnt-badge" id="loc-count-badge"></span>
       </div>
-      <div class="card-bd" id="loc-card-bd">
-        <div id="loc-table-wrap"></div>
+      <div class="card-bd">
+        <div class="tbl-wrap">
+          <table class="tbl" id="loc-tbl">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th class="r">Total</th>
+                <th class="r">Started</th>
+                <th class="r" id="th-hit">Hit 75%</th>
+                <th class="r">Completed 100%</th>
+              </tr>
+            </thead>
+            <tbody id="loc-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- FOH vs BOH Split -->
-    <div class="card ain d3" id="dept-card">
-      <div class="card-hd" onclick="toggleCard('dept-card')">
+    <!-- Assignments -->
+    <div class="card ain d1">
+      <div class="card-hd">
         <div>
-          <div class="card-title">Front of House vs Back of House</div>
-          <div class="card-sub">Same numbers broken down by team within each location</div>
-        </div>
-        <svg class="chev open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-      </div>
-      <div class="card-bd" id="dept-card-bd">
-        <div id="dept-table-wrap"></div>
-      </div>
-    </div>
-
-    <!-- Individual Performance -->
-    <div class="card ain d4" id="indiv-card">
-      <div class="card-hd" onclick="handleIndivHd(event)">
-        <div class="card-hd-left">
-          <div>
-            <div class="card-title">Individual Performance</div>
-          </div>
-          <span class="cnt-badge" id="indiv-count-badge">0</span>
-        </div>
-        <div class="card-hd-right" onclick="event.stopPropagation()">
-          <input class="fsearch" type="search" id="indiv-search" placeholder="Search name&hellip;" oninput="renderIndividual()" />
-          <select class="fsel" id="indiv-loc" onchange="renderIndividual()"><option value="">All Locs</option></select>
-          <select class="fsel" id="indiv-dept" onchange="renderIndividual()"><option value="">All Depts</option></select>
-          <select class="fsel" id="indiv-status" onchange="renderIndividual()">
-            <option value="">All Status</option>
-            <option value="passed">Passed</option>
-            <option value="atrisk">At-Risk</option>
-            <option value="stalled">Stalled</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-          <svg class="chev open" id="indiv-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          <div class="card-title" id="assign-title">Courses Assigned per Person</div>
+          <div class="card-sub">Average number of courses each person in the group has been assigned</div>
         </div>
       </div>
-      <div class="card-bd" id="indiv-card-bd">
-        <div id="indiv-table-wrap"></div>
-      </div>
-    </div>
-
-    <!-- Bottom Row -->
-    <div class="bottom-row ain d5">
-      <div class="card" id="atrisk-card">
-        <div class="card-hd" onclick="toggleCard('atrisk-card')">
-          <div>
-            <div class="card-title">At-Risk by Location</div>
-            <div class="card-sub" id="atrisk-card-sub">Assigned, never started</div>
-          </div>
-          <svg class="chev open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </div>
-        <div class="card-bd" id="atrisk-card-bd">
-          <div id="atrisk-content"></div>
-        </div>
-      </div>
-      <div class="card" id="top-card">
-        <div class="card-hd" onclick="toggleCard('top-card')">
-          <div>
-            <div class="card-title">Top Learners</div>
-            <div class="card-sub">Top 10 by time spent (engaged users)</div>
-          </div>
-          <svg class="chev open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </div>
-        <div class="card-bd" id="top-card-bd">
-          <div id="top-content"></div>
-        </div>
-      </div>
+      <div class="card-bd" id="assign-body"></div>
     </div>
 
   </div>
 </div>
 
 <script>
-/* ─── App State ─── */
+/* ─── State ─── */
 const S = {
   users: [],
-  filters: { loc: '', dept: '' },
+  mode: 'courses',   // 'courses' | 'lps'
   threshold: 0.75,
-  collapsed: new Set(),
+  expanded: new Set(),
   rawFile: null,
 };
 
+/* ─── Accessors ─── */
+function assigned(u)  { return S.mode === 'courses' ? u.ca : u.la; }
+function completed(u) { return S.mode === 'courses' ? u.cc : u.lc; }
+function eligible(u)  { return assigned(u) > 0; }
+function rate(u)      { const a = assigned(u); return a ? completed(u) / a : 0; }
+function label()      { return S.mode === 'courses' ? 'course' : 'LP'; }
+function labelPlural(){ return S.mode === 'courses' ? 'courses' : 'LPs'; }
+
 /* ─── Utilities ─── */
 function esc(s) {
-  if (s == null) return '';
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function pct(n, d)  { return (!d || d === 0) ? 0 : Math.round((n / d) * 100); }
-function median(arr) {
-  if (!arr.length) return 0;
-  const s = [...arr].sort((a, b) => a - b);
-  const m = Math.floor(s.length / 2);
-  return s.length % 2 !== 0 ? s[m] : (s[m - 1] + s[m]) / 2;
-}
-function fmt(secs) {
-  if (!secs || secs <= 0) return '&mdash;';
-  secs = Math.round(secs);
-  const h = Math.floor(secs / 3600);
-  const m = Math.floor((secs % 3600) / 60);
-  if (h > 0) return h + 'h ' + m + 'm';
-  if (m > 0) return m + 'm';
-  return secs + 's';
-}
-function tarClass(v) {
-  if (v >= 70) return 'tar-hi';
-  if (v >= 40) return 'tar-md';
-  return 'tar-lo';
+function pct(n, d) { return d ? Math.round((n / d) * 100) : 0; }
+function fmtTime(secs) {
+  if (!secs || secs < 60) return '—';
+  const h = Math.floor(secs / 3600), m = Math.floor((secs % 3600) / 60);
+  return h ? `${h}h ${m}m` : `${m}m`;
 }
 
-/* ─── File Handling ─── */
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('upzone').classList.remove('drag-over');
-  const f = e.dataTransfer.files && e.dataTransfer.files[0];
-  if (f) { S.rawFile = f; updateUploadUI(f); }
+/* ─── Pill colour ─── */
+function pctPill(val, total) {
+  const p = pct(val, total);
+  const cls = p >= 70 ? 'pct-hi' : p >= 40 ? 'pct-md' : 'pct-lo';
+  return `<span class="pct-pill ${cls}">${p}%</span> <span class="mono" style="color:rgba(38,49,76,0.4);font-size:0.72rem;">${val}/${total}</span>`;
 }
-function handleFile(event) {
-  const f = event.target.files[0];
-  if (!f) return;
-  S.rawFile = f;
-  updateUploadUI(f);
-}
-function updateUploadUI(file) {
-  const zone = document.getElementById('upzone');
-  zone.classList.add('loaded');
-  zone.querySelector('.upzone-icon').textContent = '✅';
-  document.getElementById('fname').textContent = file.name;
-  document.getElementById('process-btn').disabled = false;
-}
-function processData() {
-  if (!S.rawFile) return;
-  Papa.parse(S.rawFile, {
-    header: true,
-    skipEmptyLines: true,
-    dynamicTyping: false,
-    complete: function(results) { buildUsers(results.data); },
-    error: function(err) { alert('Error parsing CSV: ' + err.message); }
+
+/* ─── Group by location ─── */
+function byLocation() {
+  const map = {};
+  S.users.forEach(u => {
+    const loc = u.loc || '(No Location)';
+    if (!map[loc]) map[loc] = [];
+    map[loc].push(u);
   });
+  return map;
 }
-function buildUsers(rows) {
-  S.users = rows.map(function(r) {
-    return {
-      name:    (r['Name'] || '').trim(),
-      email:   (r['Email'] || '').trim(),
-      loc:     (r['Base Location'] || '').trim(),
-      dept:    (r['Dept'] || '').trim(),
-      group:   (r['Group'] || '').trim(),
-      role:    (r['Job Role'] || '').trim(),
-      ca:      parseInt(r['course_assigned'])   || 0,
-      cc:      parseInt(r['course_completed'])  || 0,
-      la:      parseInt(r['lp_assigned'])       || 0,
-      lc:      parseInt(r['lp_completed'])      || 0,
-      secs:    parseInt(r['Total Time Spent(In Secs)']) || 0,
-      started: parseInt(r['started_any'])       || 0,
-      active:  parseInt(r['active_user'])       || 0,
-    };
-  }).filter(function(u) { return u.name; });
 
-  populateDropdowns();
+/* ─── Location stats ─── */
+function locStats(users) {
+  const el   = users.filter(eligible);
+  const total = el.length;
+  const started = S.mode === 'courses'
+    ? el.filter(u => u.started === 1).length
+    : el.filter(u => u.lc > 0).length;
+  const hit  = el.filter(u => rate(u) >= S.threshold).length;
+  const done = el.filter(u => assigned(u) > 0 && completed(u) >= assigned(u)).length;
+  const avgAssigned = total
+    ? (el.reduce((s, u) => s + assigned(u), 0) / total).toFixed(1)
+    : 0;
+  return { total, started, hit, done, avgAssigned };
+}
+
+/* ─── Render all ─── */
+function renderAll() {
+  renderLocTable();
+  renderAssignCard();
+  updateSubtitles();
+}
+
+function updateSubtitles() {
+  document.getElementById('th-hit').textContent = `Hit ${Math.round(S.threshold * 100)}%`;
+  document.getElementById('assign-title').textContent =
+    `${S.mode === 'courses' ? 'Courses' : 'Learning Paths'} Assigned per Person`;
+}
+
+/* ─── Location table ─── */
+function renderLocTable() {
+  const map  = byLocation();
+  const locs = Object.keys(map).sort((a, b) => {
+    // sort by hit% descending
+    const sa = locStats(map[a]), sb = locStats(map[b]);
+    return pct(sb.hit, sb.total) - pct(sa.hit, sa.total);
+  });
+
+  document.getElementById('loc-count-badge').textContent = locs.length + ' locations';
+
+  let html = '';
+  locs.forEach(loc => {
+    const users = map[loc];
+    const st = locStats(users);
+    const isExp = S.expanded.has(loc);
+    const expCls = isExp ? ' expanded' : '';
+
+    html += `<tr class="loc-row${expCls}" data-loc="${esc(loc)}">
+      <td><span class="loc-name">${esc(loc)}</span><span class="expand-icon">▾</span></td>
+      <td class="r mono">${st.total}</td>
+      <td class="r">${pctPill(st.started, st.total)}</td>
+      <td class="r">${pctPill(st.hit, st.total)}</td>
+      <td class="r">${pctPill(st.done, st.total)}</td>
+    </tr>`;
+
+    if (isExp) {
+      // sub-header
+      html += `<tr class="sub-row">
+        <td style="padding-left:2.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Person</td>
+        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);" colspan="2">Progress</td>
+        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Hit ${Math.round(S.threshold*100)}%</td>
+        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Completed</td>
+      </tr>`;
+
+      // sort individuals by completion rate desc
+      const sorted = [...users].filter(eligible).sort((a, b) => rate(b) - rate(a));
+      sorted.forEach(u => {
+        const a = assigned(u), c = completed(u);
+        const p = pct(c, a);
+        const barCls = p >= Math.round(S.threshold * 100) ? '' : p >= 40 ? ' warn' : ' low';
+        const hitMark = rate(u) >= S.threshold
+          ? `<span class="chk">✓</span>`
+          : `<span class="dash">—</span>`;
+        const doneMark = (a > 0 && c >= a)
+          ? `<span class="chk">✓</span>`
+          : `<span class="dash">—</span>`;
+
+        html += `<tr class="sub-row">
+          <td>
+            <div class="sub-name">${esc(u.name)}</div>
+            <div class="sub-meta">${esc(u.dept || '')}${u.dept && u.role ? ' · ' : ''}${esc(u.role || '')}</div>
+          </td>
+          <td colspan="2">
+            <div class="prog-wrap">
+              <div class="prog-bar"><div class="prog-fill${barCls}" style="width:${p}%"></div></div>
+              <span class="prog-pct">${c}/${a}</span>
+            </div>
+          </td>
+          <td class="r">${hitMark}</td>
+          <td class="r">${doneMark}</td>
+        </tr>`;
+      });
+
+      // users with nothing assigned
+      const unassigned = users.filter(u => !eligible(u));
+      if (unassigned.length) {
+        html += `<tr class="sub-row">
+          <td colspan="5" style="padding-left:2.5rem;font-size:0.75rem;color:rgba(38,49,76,0.35);">
+            ${unassigned.length} person${unassigned.length > 1 ? 's' : ''} with no ${labelPlural()} assigned
+          </td>
+        </tr>`;
+      }
+    }
+  });
+
+  if (!html) html = `<tr><td colspan="5" class="empty">No data to show.</td></tr>`;
+  document.getElementById('loc-tbody').innerHTML = html;
+}
+
+/* ─── Toggle expand (event delegation) ─── */
+document.getElementById('loc-tbody').addEventListener('click', e => {
+  const row = e.target.closest('.loc-row');
+  if (!row) return;
+  const loc = row.dataset.loc;
+  if (S.expanded.has(loc)) S.expanded.delete(loc);
+  else S.expanded.add(loc);
+  renderLocTable();
+});
+
+/* ─── Assignments card ─── */
+function renderAssignCard() {
+  const map  = byLocation();
+  const locs = Object.keys(map).sort();
+  const maxAvg = Math.max(...locs.map(l => parseFloat(locStats(map[l]).avgAssigned) || 0));
+
+  let html = '';
+  locs.forEach(loc => {
+    const st  = locStats(map[loc]);
+    const barW = maxAvg ? Math.round((parseFloat(st.avgAssigned) / maxAvg) * 100) : 0;
+    html += `<div class="assign-row">
+      <span class="assign-loc">${esc(loc)}</span>
+      <div class="assign-bar-wrap"><div class="assign-bar-fill" style="width:${barW}%"></div></div>
+      <span class="assign-val">${st.avgAssigned} ${labelPlural()}</span>
+    </div>`;
+  });
+
+  document.getElementById('assign-body').innerHTML = html || `<div class="empty">No data.</div>`;
+}
+
+/* ─── Mode toggle ─── */
+function setMode(mode) {
+  S.mode = mode;
+  document.getElementById('pill-courses').classList.toggle('active', mode === 'courses');
+  document.getElementById('pill-lps').classList.toggle('active', mode === 'lps');
+  S.expanded.clear();
   renderAll();
-
-  document.getElementById('upload-section').style.display = 'none';
-  document.getElementById('dashboard').classList.add('visible');
-  document.getElementById('filter-bar').classList.add('visible');
-
-  var now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-  document.getElementById('hdr-status').textContent =
-    'Processed ' + now + ' \u00b7 ' + S.users.length + ' users';
 }
 
-/* ─── Dropdowns ─── */
-function populateDropdowns() {
-  var locs  = unique(S.users.map(function(u) { return u.loc;  }).filter(Boolean)).sort();
-  var depts = unique(S.users.map(function(u) { return u.dept; }).filter(Boolean)).sort();
-  fillSelect('f-loc',      locs,  'All Locations');
-  fillSelect('f-dept',     depts, 'All Depts');
-  fillSelect('indiv-loc',  locs,  'All Locs');
-  fillSelect('indiv-dept', depts, 'All Depts');
-}
-function unique(arr) {
-  var seen = {}; var out = [];
-  arr.forEach(function(v) { if (!seen[v]) { seen[v] = 1; out.push(v); } });
-  return out;
-}
-function fillSelect(id, items, allLabel) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var cur = el.value;
-  el.innerHTML = '<option value="">' + allLabel + '</option>' +
-    items.map(function(i) {
-      return '<option value="' + esc(i) + '"' + (i === cur ? ' selected' : '') + '>' + esc(i) + '</option>';
-    }).join('');
-  if (items.indexOf(cur) !== -1) el.value = cur;
-}
-
-/* ─── Filters ─── */
-function applyFilters() {
-  S.filters.loc  = document.getElementById('f-loc').value;
-  S.filters.dept = document.getElementById('f-dept').value;
-  renderAll();
-}
-function resetFilters() {
-  S.filters.loc = ''; S.filters.dept = '';
-  S.threshold = 0.75;
-  document.getElementById('f-loc').value         = '';
-  document.getElementById('f-dept').value        = '';
-  document.getElementById('threshold-slider').value = 75;
-  document.getElementById('threshold-label').textContent = '75%';
-  document.getElementById('indiv-loc').value     = '';
-  document.getElementById('indiv-dept').value    = '';
-  document.getElementById('indiv-status').value  = '';
-  document.getElementById('indiv-search').value  = '';
-  renderAll();
-}
+/* ─── Threshold slider ─── */
 function updateThreshold(v) {
   S.threshold = parseInt(v, 10) / 100;
   document.getElementById('threshold-label').textContent = v + '%';
   renderAll();
 }
-function getUsers() {
-  return S.users.filter(function(u) {
-    if (S.filters.loc  && u.loc  !== S.filters.loc)  return false;
-    if (S.filters.dept && u.dept !== S.filters.dept) return false;
-    return true;
+
+/* ─── File handling ─── */
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upzone').classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) { S.rawFile = f; updateUploadUI(f); }
+}
+function handleFile(e) {
+  const f = e.target.files[0];
+  if (f) { S.rawFile = f; updateUploadUI(f); }
+}
+function updateUploadUI(file) {
+  document.getElementById('fname').textContent = file.name;
+  document.getElementById('upzone').classList.add('loaded');
+  document.getElementById('process-btn').disabled = false;
+}
+
+/* ─── Process CSV ─── */
+function processData() {
+  if (!S.rawFile) return;
+  Papa.parse(S.rawFile, {
+    header: true, skipEmptyLines: true, dynamicTyping: false,
+    complete: function(res) {
+      const rows = res.data;
+      S.users = rows.map(r => ({
+        name:    (r['Name'] || r['name'] || '').trim(),
+        email:   (r['Email'] || r['email'] || '').trim(),
+        loc:     (r['Base Location'] || r['base_location'] || '').trim(),
+        dept:    (r['Dept'] || r['dept'] || '').trim(),
+        role:    (r['Job Role'] || r['job_role'] || '').trim(),
+        ca:      parseInt(r['course_assigned'] || 0, 10),
+        cc:      parseInt(r['course_completed'] || 0, 10),
+        la:      parseInt(r['lp_assigned'] || 0, 10),
+        lc:      parseInt(r['lp_completed'] || 0, 10),
+        secs:    parseInt(r['Total Time Spent(In Secs)'] || 0, 10),
+        started: parseInt(r['started_any'] || 0, 10),
+        active:  parseInt(r['active_user'] || 0, 10),
+      })).filter(u => u.name);
+
+      document.getElementById('hdr-status').textContent = `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}`;
+      document.getElementById('upload-section').style.display = 'none';
+      document.getElementById('dashboard').classList.add('visible');
+      document.getElementById('filter-bar').classList.add('visible');
+      renderAll();
+    },
+    error: function(err) { alert('Error parsing CSV: ' + err.message); }
   });
 }
 
-/* ─── Card Toggle ─── */
-function toggleCard(id) {
-  var bd   = document.getElementById(id + '-bd');
-  var chevEl = document.querySelector('#' + id + ' .card-hd .chev');
-  if (!bd) return;
-  if (S.collapsed.has(id)) {
-    S.collapsed.delete(id);
-    bd.classList.remove('hidden');
-    if (chevEl) chevEl.classList.add('open');
-  } else {
-    S.collapsed.add(id);
-    bd.classList.add('hidden');
-    if (chevEl) chevEl.classList.remove('open');
-  }
-}
-function handleIndivHd(e) {
-  // Only collapse when clicking the left side (title area), not the right controls
-  var right = e.currentTarget.querySelector('.card-hd-right');
-  if (right && right.contains(e.target)) return;
-  toggleCard('indiv-card');
-  // sync chev
-  var chev = document.getElementById('indiv-chev');
-  if (chev) {
-    if (S.collapsed.has('indiv-card')) chev.classList.remove('open');
-    else chev.classList.add('open');
-  }
-}
+/* ─── Show upload ─── */
 function showUpload() {
-  document.getElementById('upload-section').style.display = '';
+  document.getElementById('upload-section').style.display = 'block';
   document.getElementById('dashboard').classList.remove('visible');
   document.getElementById('filter-bar').classList.remove('visible');
   document.getElementById('hdr-status').textContent = '';
-  var zone = document.getElementById('upzone');
-  zone.classList.remove('loaded');
-  zone.querySelector('.upzone-icon').textContent = '\uD83D\uDCC4';
-  document.getElementById('fname').textContent = '';
   document.getElementById('process-btn').disabled = true;
-  document.getElementById('file-input').value = '';
-  S.rawFile = null; S.users = [];
-  S.filters = { loc: '', dept: '' }; S.threshold = 0.75;
-  document.getElementById('threshold-slider').value = 75;
-  document.getElementById('threshold-label').textContent = '75%';
-}
-
-/* ─── Core Metrics ─── */
-function calcMetrics(users) {
-  var total     = users.length;
-  var assigned  = users.filter(function(u) { return u.ca > 0; });
-  var assignedN = assigned.length;
-  var engaged   = users.filter(function(u) { return u.started === 1; }).length;
-  var active    = users.filter(function(u) { return u.active  === 1; }).length;
-  var atRisk    = users.filter(function(u) { return u.started === 0 && u.ca > 0; }).length;
-
-  // TAR
-  var tarPassed = assigned.filter(function(u) { return u.cc / u.ca >= S.threshold; }).length;
-  var tar       = assignedN > 0 ? Math.round((tarPassed / assignedN) * 100) : 0;
-
-  // ZPR — denominator is total
-  var notStarted = users.filter(function(u) { return u.started === 0; }).length;
-  var zpr        = total > 0 ? Math.round((notStarted / total) * 100) : 0;
-
-  // Median
-  var rates     = assigned.map(function(u) { return u.cc / u.ca; });
-  var medianR   = median(rates);
-  var medianRate = Math.round(medianR * 100);
-
-  // Bands (assigned only)
-  var bands = { none: 0, low: 0, mid: 0, hi: 0 };
-  assigned.forEach(function(u) {
-    var r = u.cc / u.ca;
-    if (r === 0)                    bands.none++;
-    else if (r < 0.5)               bands.low++;
-    else if (r < S.threshold)       bands.mid++;
-    else                            bands.hi++;
-  });
-
-  // ACR
-  var starters  = users.filter(function(u) { return u.started === 1 && u.ca > 0; });
-  var acrPassed = starters.filter(function(u) { return u.cc / u.ca >= S.threshold; }).length;
-  var acr       = starters.length > 0 ? Math.round((acrPassed / starters.length) * 100) : 0;
-
-  var totalSecs = users.reduce(function(s, u) { return s + u.secs; }, 0);
-
-  return { total: total, assignedN: assignedN, engaged: engaged, active: active,
-           atRisk: atRisk, tar: tar, zpr: zpr, medianRate: medianRate,
-           bands: bands, acr: acr, totalSecs: totalSecs };
-}
-
-function bandBar(bands, assignedN) {
-  if (!assignedN) return '<span class="txt-muted">&mdash;</span>';
-  var colors = { none: '#fca5a5', low: '#fdba74', mid: '#fde68a', hi: '#5eead4' };
-  var keys   = ['none', 'low', 'mid', 'hi'];
-  var segs   = '';
-  keys.forEach(function(k) {
-    var w = (bands[k] / assignedN) * 100;
-    if (w > 0) {
-      segs += '<div class="band-seg" style="width:' + w.toFixed(1) + '%;background:' + colors[k] + ';"></div>';
-    }
-  });
-  if (!segs) {
-    segs = '<div class="band-seg" style="width:100%;background:rgba(38,49,76,0.08);"></div>';
-  }
-  var counts = '<div class="band-counts">' + bands.none + '&thinsp;/&thinsp;' +
-    bands.low + '&thinsp;/&thinsp;' + bands.mid + '&thinsp;/&thinsp;' + bands.hi + '</div>';
-  return '<div><div class="band-wrap">' + segs + '</div>' + counts + '</div>';
-}
-
-/* ─── Render All ─── */
-function renderAll() {
-  var users = getUsers();
-  renderOverview(users);
-  renderLocTable(users);
-  renderDeptTable(users);
-  renderIndividual();
-  renderAtRisk(users);
-  renderTopLearners(users);
-}
-
-/* ─── Overview ─── */
-function renderOverview(users) {
-  var m    = calcMetrics(users);
-  var locs = unique(users.map(function(u) { return u.loc; }).filter(Boolean));
-  var tarValClass = m.tar >= 70 ? 'c-teal' : m.tar >= 40 ? 'c-gold' : 'c-red';
-
-  document.getElementById('overview-grid').innerHTML =
-    '<div class="metric ain">' +
-      '<div class="metric-lbl">Total people</div>' +
-      '<div class="metric-val">' + m.total + '</div>' +
-      '<div class="metric-sub">' + locs.length + ' location' + (locs.length !== 1 ? 's' : '') + '</div>' +
-    '</div>' +
-    '<div class="metric ain d1">' +
-      '<div class="metric-lbl">Have started</div>' +
-      '<div class="metric-val c-teal">' + m.engaged + '</div>' +
-      '<div class="metric-sub">' + pct(m.engaged, m.total) + '% opened at least one course</div>' +
-    '</div>' +
-    '<div class="metric ain d2">' +
-      '<div class="metric-lbl">Passed overall</div>' +
-      '<div class="metric-val ' + tarValClass + '">' + m.tar + '%</div>' +
-      '<div class="metric-sub">Of ' + m.assignedN + ' people with courses assigned</div>' +
-    '</div>' +
-    '<div class="metric ain d3">' +
-      '<div class="metric-lbl">Haven&rsquo;t started</div>' +
-      '<div class="metric-val c-red">' + m.atRisk + '</div>' +
-      '<div class="metric-sub">Assigned courses but opened nothing</div>' +
-    '</div>';
-}
-
-/* ─── Location Table ─── */
-function renderLocTable(users) {
-  var locMap = {};
-  users.forEach(function(u) {
-    if (!u.loc) return;
-    if (!locMap[u.loc]) locMap[u.loc] = [];
-    locMap[u.loc].push(u);
-  });
-
-  var rows = Object.keys(locMap).map(function(loc) {
-    return { loc: loc, us: locMap[loc], m: calcMetrics(locMap[loc]) };
-  }).sort(function(a, b) {
-    if (!a.m.assignedN && !b.m.assignedN) return a.loc.localeCompare(b.loc);
-    if (!a.m.assignedN) return 1;
-    if (!b.m.assignedN) return -1;
-    return b.m.tar - a.m.tar;
-  });
-
-  if (!rows.length) {
-    document.getElementById('loc-table-wrap').innerHTML = '<div class="empty-state">No data available.</div>';
-    return;
-  }
-
-  function zprBadge(zpr, n) {
-    var cls = zpr < 15 ? 'b-green' : zpr <= 30 ? 'b-amber' : 'b-red';
-    return '<span class="badge ' + cls + '">' + zpr + '%</span>' +
-      '<span class="txt-muted txt-sm mono" style="margin-left:0.3rem;">(' + n + ')</span>';
-  }
-
-  var thr = Math.round(S.threshold * 100);
-  var html = '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
-    '<th>Location</th>' +
-    '<th>People</th>' +
-    '<th title="% of people who completed ' + thr + '% or more of their assigned courses">① Passed (&ge;' + thr + '%)</th>' +
-    '<th title="% who have not opened a single course yet">② Never started</th>' +
-    '<th title="The middle person\'s completion % — not skewed by top performers">③ Typical person</th>' +
-    '<th title="How the team is split across progress levels" style="min-width:150px;">④ Team spread</th>' +
-    '<th title="Of people who started, how many completed enough to pass">⑤ Starters who passed</th>' +
-    '<th>Time on platform</th>' +
-    '</tr></thead><tbody>';
-
-  rows.forEach(function(row) {
-    var m = row.m;
-    var notStartedN = row.us.filter(function(u) { return u.started === 0; }).length;
-    var acrColor = m.acr >= 70 ? 'var(--teal)' : m.acr >= 40 ? '#8a6300' : 'var(--red)';
-    html +=
-      '<tr>' +
-      '<td><span style="font-weight:600;font-size:0.82rem;">' + esc(row.loc) + '</span></td>' +
-      '<td class="mono">' + m.total + '</td>' +
-      '<td>' + (m.assignedN
-        ? '<span class="tar ' + tarClass(m.tar) + '">' + m.tar + '%</span>'
-        : '<span class="txt-muted mono">&mdash;</span>') + '</td>' +
-      '<td>' + zprBadge(m.zpr, notStartedN) + '</td>' +
-      '<td>' + (m.assignedN
-        ? '<span class="mono">' + m.medianRate + '%</span>'
-        : '<span class="txt-muted mono">&mdash;</span>') + '</td>' +
-      '<td>' + bandBar(m.bands, m.assignedN) + '</td>' +
-      '<td>' + (m.assignedN
-        ? '<span class="mono" style="color:' + acrColor + ';">' + m.acr + '%</span>'
-        : '<span class="txt-muted mono">&mdash;</span>') + '</td>' +
-      '<td class="mono">' + fmt(m.totalSecs) + '</td>' +
-      '</tr>';
-  });
-
-  html += '</tbody></table></div>';
-  html += '<div class="legend">' +
-    '<div class="legend-item"><div class="legend-swatch" style="background:#fca5a5;"></div> Not started</div>' +
-    '<div class="legend-item"><div class="legend-swatch" style="background:#fdba74;"></div> Barely started (1&ndash;49%)</div>' +
-    '<div class="legend-item"><div class="legend-swatch" style="background:#fde68a;"></div> Almost there (50&ndash;' + (thr - 1) + '%)</div>' +
-    '<div class="legend-item"><div class="legend-swatch" style="background:#5eead4;"></div> Passed (&ge;' + thr + '%)</div>' +
-    '<div class="legend-item" style="margin-left:auto;font-size:0.68rem;color:rgba(38,49,76,0.4);">Numbers: not started / barely / almost / passed</div>' +
-    '</div>';
-
-  document.getElementById('loc-table-wrap').innerHTML = html;
-}
-
-/* ─── Dept Table ─── */
-function renderDeptTable(users) {
-  var locDeptMap = {};
-  users.forEach(function(u) {
-    if (!u.loc || !u.dept) return;
-    var key = u.loc + '\u2060' + u.dept;
-    if (!locDeptMap[key]) locDeptMap[key] = { loc: u.loc, dept: u.dept, us: [] };
-    locDeptMap[key].us.push(u);
-  });
-
-  var rows = Object.values(locDeptMap).sort(function(a, b) {
-    var lc = a.loc.localeCompare(b.loc);
-    return lc !== 0 ? lc : a.dept.localeCompare(b.dept);
-  });
-
-  if (!rows.length) {
-    document.getElementById('dept-table-wrap').innerHTML = '<div class="empty-state">No data available.</div>';
-    return;
-  }
-
-  function deptBadge(dept) {
-    var d = (dept || '').toLowerCase();
-    if (d === 'foh')       return '<span class="badge b-teal">FOH</span>';
-    if (d === 'boh')       return '<span class="badge b-navy">BOH</span>';
-    if (d === 'corporate') return '<span class="badge b-gold">Corporate</span>';
-    return '<span class="badge b-gray">' + esc(dept) + '</span>';
-  }
-
-  var html = '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
-    '<th>Location</th><th>Team</th><th>People</th>' +
-    '<th title="% who completed enough to pass">① Passed</th>' +
-    '<th title="% who haven\'t opened anything">② Never started</th>' +
-    '<th title="What the middle person has done">③ Typical person</th>' +
-    '<th style="min-width:150px;" title="How the team is spread across progress levels">④ Team spread</th>' +
-    '</tr></thead><tbody>';
-
-  var lastLoc = null;
-  rows.forEach(function(row) {
-    var m = calcMetrics(row.us);
-    var isFirst = row.loc !== lastLoc;
-    var border  = (isFirst && lastLoc !== null) ? 'border-top:2px solid var(--border);' : '';
-    lastLoc = row.loc;
-
-    var locCell = isFirst
-      ? '<td style="' + border + 'font-weight:600;font-size:0.82rem;">' + esc(row.loc) + '</td>'
-      : '<td style="' + border + 'color:transparent;">.</td>';
-
-    var notStartedN = row.us.filter(function(u) { return u.started === 0; }).length;
-    var zprCls = m.zpr < 15 ? 'b-green' : m.zpr <= 30 ? 'b-amber' : 'b-red';
-
-    html +=
-      '<tr>' + locCell +
-      '<td style="' + border + '">' + deptBadge(row.dept) + '</td>' +
-      '<td style="' + border + '" class="mono">' + m.total + '</td>' +
-      '<td style="' + border + '">' + (m.assignedN
-        ? '<span class="tar ' + tarClass(m.tar) + '">' + m.tar + '%</span>'
-        : '<span class="txt-muted mono">&mdash;</span>') + '</td>' +
-      '<td style="' + border + '"><span class="badge ' + zprCls + '">' + m.zpr + '%</span>' +
-        '<span class="txt-muted txt-sm mono" style="margin-left:0.3rem;">(' + notStartedN + ')</span></td>' +
-      '<td style="' + border + '">' + (m.assignedN
-        ? '<span class="mono">' + m.medianRate + '%</span>'
-        : '<span class="txt-muted mono">&mdash;</span>') + '</td>' +
-      '<td style="' + border + '">' + bandBar(m.bands, m.assignedN) + '</td>' +
-      '</tr>';
-  });
-
-  html += '</tbody></table></div>';
-  document.getElementById('dept-table-wrap').innerHTML = html;
-}
-
-/* ─── Individual Table ─── */
-function renderIndividual() {
-  var searchQ = ((document.getElementById('indiv-search')  || {}).value || '').toLowerCase().trim();
-  var locF    =  (document.getElementById('indiv-loc')     || {}).value || '';
-  var deptF   =  (document.getElementById('indiv-dept')    || {}).value || '';
-  var statusF =  (document.getElementById('indiv-status')  || {}).value || '';
-
-  var users = S.users.filter(function(u) {
-    if (S.filters.loc  && u.loc  !== S.filters.loc)  return false;
-    if (S.filters.dept && u.dept !== S.filters.dept) return false;
-    if (locF  && u.loc  !== locF)  return false;
-    if (deptF && u.dept !== deptF) return false;
-    if (searchQ && u.name.toLowerCase().indexOf(searchQ) === -1 &&
-        u.email.toLowerCase().indexOf(searchQ) === -1) return false;
-    return true;
-  });
-
-  var withStatus = users.map(function(u) {
-    var rate = u.ca > 0 ? u.cc / u.ca : null;
-    var status;
-    if (u.ca > 0 && rate >= S.threshold)          status = 'passed';
-    else if (u.started === 0 && u.ca > 0)          status = 'atrisk';
-    else if (u.started === 1 && u.ca > 0 && rate < S.threshold) status = 'stalled';
-    else if (u.active === 1)                        status = 'active';
-    else                                            status = 'inactive';
-    return { u: u, status: status, rate: rate };
-  });
-
-  var filtered = statusF
-    ? withStatus.filter(function(x) { return x.status === statusF; })
-    : withStatus;
-
-  filtered.sort(function(a, b) {
-    var ra = a.rate !== null ? a.rate : -1;
-    var rb = b.rate !== null ? b.rate : -1;
-    if (rb !== ra) return rb - ra;
-    return a.u.name.localeCompare(b.u.name);
-  });
-
-  document.getElementById('indiv-count-badge').textContent = filtered.length;
-
-  var MAX  = 300;
-  var shown = filtered.slice(0, MAX);
-
-  if (!shown.length) {
-    document.getElementById('indiv-table-wrap').innerHTML =
-      '<div class="empty-state">No users match the current filters.</div>';
-    return;
-  }
-
-  function statusBadge(s) {
-    switch(s) {
-      case 'passed':  return '<span class="badge b-teal">Passed</span>';
-      case 'atrisk':  return '<span class="badge b-red">At-Risk</span>';
-      case 'stalled': return '<span class="badge b-amber">Stalled</span>';
-      case 'active':  return '<span class="badge b-gray">Active</span>';
-      default:        return '<span class="badge b-gray">Inactive</span>';
-    }
-  }
-  function deptBadge2(dept) {
-    var d = (dept || '').toLowerCase();
-    if (d === 'foh')       return '<span class="badge b-teal">FOH</span>';
-    if (d === 'boh')       return '<span class="badge b-navy">BOH</span>';
-    if (d === 'corporate') return '<span class="badge b-gold">Corporate</span>';
-    return '<span class="badge b-gray">' + esc(dept) + '</span>';
-  }
-
-  var html = '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
-    '<th>Name</th><th>Location</th><th>Dept</th><th>Role</th>' +
-    '<th>Courses</th><th>LPs</th><th>Time</th><th>Status</th>' +
-    '</tr></thead><tbody>';
-
-  shown.forEach(function(x) {
-    var u = x.u;
-    var ratePct = u.ca > 0 ? Math.round((u.cc / u.ca) * 100) : null;
-    var barCls  = x.status === 'passed' ? 'pbar-teal'
-                : x.status === 'atrisk' ? 'pbar-red'
-                : x.status === 'stalled' ? 'pbar-gold'
-                : 'pbar-navy';
-
-    var coursesCell = u.ca > 0
-      ? '<div style="min-width:120px;">' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;">' +
-            '<span class="mono" style="font-size:0.72rem;">' + u.cc + '/' + u.ca + '</span>' +
-            '<span class="mono" style="font-size:0.72rem;">' + ratePct + '%</span>' +
-          '</div>' +
-          '<div class="pbar"><div class="pbar-fill ' + barCls + '" style="width:' + ratePct + '%;"></div></div>' +
-        '</div>'
-      : '<span class="txt-muted txt-sm">&mdash;</span>';
-
-    var lpCell = u.la > 0
-      ? '<span class="mono" style="font-size:0.75rem;">' + u.lc + '/' + u.la + '</span>'
-      : '<span class="txt-muted txt-sm">&mdash;</span>';
-
-    html +=
-      '<tr>' +
-      '<td><div class="tbl-name">' + esc(u.name) + '</div>' +
-        '<div class="tbl-email">' + esc(u.email) + '</div></td>' +
-      '<td style="font-size:0.78rem;">' + esc(u.loc) + '</td>' +
-      '<td>' + deptBadge2(u.dept) + '</td>' +
-      '<td style="font-size:0.75rem;color:rgba(38,49,76,0.55);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
-        (esc(u.role) || '&mdash;') + '</td>' +
-      '<td>' + coursesCell + '</td>' +
-      '<td>' + lpCell + '</td>' +
-      '<td class="mono" style="font-size:0.75rem;">' + fmt(u.secs) + '</td>' +
-      '<td>' + statusBadge(x.status) + '</td>' +
-      '</tr>';
-  });
-
-  html += '</tbody></table></div>';
-  if (filtered.length > MAX) {
-    html += '<div class="section-note">Showing first ' + MAX + ' of ' + filtered.length +
-      ' users. Refine filters to narrow results.</div>';
-  }
-  document.getElementById('indiv-table-wrap').innerHTML = html;
-}
-
-/* ─── At-Risk ─── */
-function renderAtRisk(users) {
-  var atRisk = users.filter(function(u) { return u.started === 0 && u.ca > 0; });
-  document.getElementById('atrisk-card-sub').textContent =
-    atRisk.length + ' staff assigned but never started';
-
-  if (!atRisk.length) {
-    document.getElementById('atrisk-content').innerHTML =
-      '<div class="empty-state">No at-risk users in current selection.</div>';
-    return;
-  }
-
-  var locMap = {};
-  atRisk.forEach(function(u) {
-    if (!locMap[u.loc]) locMap[u.loc] = [];
-    locMap[u.loc].push(u);
-  });
-
-  var sorted = Object.keys(locMap).map(function(l) {
-    return [l, locMap[l]];
-  }).sort(function(a, b) { return b[1].length - a[1].length; });
-
-  var html = '';
-  sorted.forEach(function(pair) {
-    var loc = pair[0], us = pair[1];
-    var shown = us.slice(0, 8);
-    var more  = us.length - shown.length;
-    var chips = shown.map(function(u) {
-      var first = u.name.split(' ')[0];
-      return '<span class="chip" title="' + esc(u.name) + '">' + esc(first) + '</span>';
-    }).join('');
-    if (more > 0) chips += '<span class="chip more">+' + more + ' more</span>';
-    html +=
-      '<div class="atr-loc">' +
-        '<div class="atr-loc-hd"><span>' + esc(loc) + '</span>' +
-          '<span class="badge b-red">' + us.length + '</span></div>' +
-        '<div class="chips">' + chips + '</div>' +
-      '</div>';
-  });
-  document.getElementById('atrisk-content').innerHTML = html;
-}
-
-/* ─── Top Learners ─── */
-function renderTopLearners(users) {
-  var top = users.filter(function(u) { return u.started === 1; })
-    .sort(function(a, b) { return b.secs - a.secs; })
-    .slice(0, 10);
-
-  if (!top.length) {
-    document.getElementById('top-content').innerHTML =
-      '<div class="empty-state">No engaged users in current selection.</div>';
-    return;
-  }
-
-  var maxSecs = top[0].secs;
-  var html = '';
-  top.forEach(function(u, i) {
-    var width   = maxSecs > 0 ? (u.secs / maxSecs) * 100 : 0;
-    var ratePct = u.ca > 0 ? Math.round((u.cc / u.ca) * 100) : null;
-    html +=
-      '<div class="learner-row">' +
-        '<div class="learner-rank">' + (i + 1) + '</div>' +
-        '<div class="learner-info">' +
-          '<div class="learner-name">' + esc(u.name) + '</div>' +
-          '<div class="pbar" style="margin:4px 0;">' +
-            '<div class="pbar-fill pbar-teal" style="width:' + width.toFixed(1) + '%;"></div></div>' +
-          '<div class="learner-meta">' + esc(u.loc) +
-            (ratePct !== null ? ' &middot; ' + ratePct + '% complete' : '') + '</div>' +
-        '</div>' +
-        '<div class="learner-time">' + fmt(u.secs) + '</div>' +
-      '</div>';
-  });
-  document.getElementById('top-content').innerHTML = html;
+  document.getElementById('fname').textContent = '';
+  document.getElementById('upzone').classList.remove('loaded');
+  S.users = []; S.expanded.clear();
+  const fi = document.getElementById('file-input');
+  fi.value = '';
 }
 </script>
 </body>
