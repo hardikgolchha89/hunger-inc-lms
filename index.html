@@ -82,6 +82,18 @@
   }
   .fbar-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
+  /* ── Tab group (Location / Department) ── */
+  .tab-group { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+  .tab-btn {
+    border: none; background: transparent; cursor: pointer;
+    padding: 0.25rem 0.85rem; height: 48px;
+    font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
+    color: rgba(38,49,76,0.45); transition: color 0.15s;
+    border-bottom: 2px solid transparent; white-space: nowrap;
+  }
+  .tab-btn.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .tab-btn:hover:not(.active) { color: var(--navy); }
+
   /* ── Toggle Pills ── */
   .toggle-group { display: flex; background: rgba(38,49,76,0.06); border-radius: 6px; padding: 2px; gap: 2px; flex-shrink: 0; }
   .tpill {
@@ -162,34 +174,10 @@
   }
   .tbl td.r { text-align: right; }
   .tbl tr:last-child td { border-bottom: none; }
+  .tbl tbody tr:hover td { background: rgba(39,189,190,0.025); }
 
-  /* ── Location row (clickable) ── */
-  .loc-row { cursor: pointer; transition: background 0.1s; }
-  .loc-row:hover td { background: rgba(39,189,190,0.03); }
-  .loc-row.expanded td { background: rgba(39,189,190,0.05); border-bottom: none; }
-  .loc-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; }
-  .expand-icon { color: rgba(38,49,76,0.35); transition: transform 0.2s; display: inline-block; font-size: 0.7rem; margin-left: 0.4rem; }
-  .loc-row.expanded .expand-icon { transform: rotate(180deg); }
-
-  /* ── Expanded sub-table ── */
-  .sub-row td {
-    background: rgba(39,189,190,0.025);
-    border-bottom: 1px solid rgba(39,189,190,0.08);
-    padding: 0.5rem 0.9rem;
-    font-size: 0.79rem;
-  }
-  .sub-row:last-child td { border-bottom: 1px solid rgba(38,49,76,0.06); }
-  .sub-row td:first-child { padding-left: 2.5rem; }
-  .sub-name { color: var(--navy); font-weight: 500; }
-  .sub-meta { font-size: 0.68rem; color: rgba(38,49,76,0.4); margin-top: 0.1rem; }
-
-  /* ── Progress inline ── */
-  .prog-wrap { display: flex; align-items: center; gap: 0.5rem; }
-  .prog-bar  { flex: 1; height: 5px; background: rgba(38,49,76,0.08); border-radius: 99px; overflow: hidden; min-width: 60px; }
-  .prog-fill { height: 100%; border-radius: 99px; background: var(--teal); transition: width 0.3s; }
-  .prog-fill.warn { background: var(--gold); }
-  .prog-fill.low  { background: rgba(38,49,76,0.18); }
-  .prog-pct  { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(38,49,76,0.6); white-space: nowrap; min-width: 32px; }
+  /* ── Group name cell ── */
+  .grp-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; }
 
   /* ── Mono numbers ── */
   .mono { font-family: var(--font-mono); font-size: 0.8rem; }
@@ -204,27 +192,47 @@
   .pct-lo  { background: rgba(220,38,38,0.1);   color: var(--red); border-color: rgba(220,38,38,0.2); }
 
   /* ── Check / dash ── */
-  .chk    { color: #0f8788; font-size: 0.85rem; }
-  .dash   { color: rgba(38,49,76,0.25); }
+  .chk  { color: #0f8788; font-size: 0.85rem; }
+  .dash { color: rgba(38,49,76,0.25); }
 
-  /* ── Assignments card list ── */
-  .assign-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid rgba(38,49,76,0.05); }
-  .assign-row:last-child { border-bottom: none; }
-  .assign-loc  { font-size: 0.82rem; font-weight: 500; color: var(--navy); }
-  .assign-val  { font-family: var(--font-mono); font-size: 0.82rem; color: var(--navy); font-weight: 600; }
-  .assign-bar-wrap { flex: 1; margin: 0 1rem; height: 5px; background: rgba(38,49,76,0.07); border-radius: 99px; overflow: hidden; }
-  .assign-bar-fill { height: 100%; border-radius: 99px; background: rgba(38,49,76,0.2); }
+  /* ── Progress bar ── */
+  .prog-wrap { display: flex; align-items: center; gap: 0.5rem; }
+  .prog-bar  { flex: 1; height: 5px; background: rgba(38,49,76,0.08); border-radius: 99px; overflow: hidden; min-width: 60px; }
+  .prog-fill { height: 100%; border-radius: 99px; background: var(--teal); transition: width 0.3s; }
+  .prog-fill.warn { background: var(--gold); }
+  .prog-fill.low  { background: rgba(38,49,76,0.18); }
+  .prog-pct  { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(38,49,76,0.6); white-space: nowrap; min-width: 32px; }
 
-  /* ── Empty state ── */
-  .empty { text-align: center; padding: 2.5rem; color: rgba(38,49,76,0.35); font-size: 0.82rem; }
-
-  /* ── Misc ── */
+  /* ── Badge ── */
   .cnt-badge {
     display: inline-flex; align-items: center; justify-content: center;
     background: rgba(38,49,76,0.07); color: rgba(38,49,76,0.6);
     border-radius: 99px; font-size: 0.65rem; font-weight: 600;
     padding: 0.1rem 0.5rem; font-family: var(--font-mono);
   }
+
+  /* ── Pagination ── */
+  .pagination {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.65rem 1rem; border-top: 1px solid var(--border);
+    background: rgba(38,49,76,0.015);
+  }
+  .pagination-info { font-size: 0.73rem; color: rgba(38,49,76,0.45); font-family: var(--font-mono); }
+  .page-btns { display: flex; align-items: center; gap: 0.25rem; }
+  .page-btn {
+    border: 1px solid var(--border); background: #fff; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 4px;
+    font-family: var(--font-mono); font-size: 0.73rem; font-weight: 600;
+    color: rgba(38,49,76,0.55); display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s;
+  }
+  .page-btn:hover:not(:disabled):not(.active) { border-color: var(--navy); color: var(--navy); }
+  .page-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); cursor: default; }
+  .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .page-btn.arrow { font-size: 0.65rem; }
+
+  /* ── Empty state ── */
+  .empty { text-align: center; padding: 2.5rem; color: rgba(38,49,76,0.35); font-size: 0.82rem; }
 </style>
 </head>
 <body>
@@ -245,6 +253,13 @@
 
 <!-- ── Filter Bar ── -->
 <div id="filter-bar">
+  <!-- Group-by tabs -->
+  <div class="tab-group">
+    <button class="tab-btn active" id="tab-loc"  onclick="setGroupBy('loc')">By Location</button>
+    <button class="tab-btn"        id="tab-dept" onclick="setGroupBy('dept')">By Department</button>
+  </div>
+  <div class="fbar-divider"></div>
+  <!-- Courses / LPs toggle -->
   <div class="toggle-group">
     <button class="tpill active" id="pill-courses" onclick="setMode('courses')">Courses</button>
     <button class="tpill"        id="pill-lps"     onclick="setMode('lps')">Learning Paths</button>
@@ -313,56 +328,76 @@
 <div id="dashboard">
   <div id="main-container">
 
-    <!-- Location Performance -->
+    <!-- Group Performance -->
     <div class="card ain">
       <div class="card-hd">
         <div>
-          <div class="card-title">Location Performance</div>
-          <div class="card-sub" id="loc-card-sub">Click any row to see the people inside it</div>
+          <div class="card-title" id="grp-card-title">Location Performance</div>
+          <div class="card-sub">Sorted by pass rate — highest first</div>
         </div>
-        <span class="cnt-badge" id="loc-count-badge"></span>
+        <span class="cnt-badge" id="grp-count-badge"></span>
       </div>
       <div class="card-bd">
         <div class="tbl-wrap">
-          <table class="tbl" id="loc-tbl">
+          <table class="tbl">
             <thead>
               <tr>
-                <th>Location</th>
+                <th id="th-grp-name">Location</th>
                 <th class="r">Total</th>
                 <th class="r">Started</th>
                 <th class="r" id="th-hit">Hit 75%</th>
                 <th class="r">Completed 100%</th>
               </tr>
             </thead>
-            <tbody id="loc-tbody"></tbody>
+            <tbody id="grp-tbody"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Assignments -->
+    <!-- Individual Users -->
     <div class="card ain d1">
       <div class="card-hd">
         <div>
-          <div class="card-title" id="assign-title">Courses Assigned per Person</div>
-          <div class="card-sub">Average number of courses each person in the group has been assigned</div>
+          <div class="card-title">All People</div>
+          <div class="card-sub" id="indiv-card-sub"></div>
         </div>
+        <span class="cnt-badge" id="indiv-count-badge"></span>
       </div>
-      <div class="card-bd" id="assign-body"></div>
+      <div class="card-bd">
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Department</th>
+                <th class="r" id="th-indiv-assigned">Courses Assigned</th>
+                <th class="r">Has Started</th>
+                <th class="r">% Finished</th>
+              </tr>
+            </thead>
+            <tbody id="indiv-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="indiv-pagination"></div>
+      </div>
     </div>
 
   </div>
 </div>
 
 <script>
+const PAGE_SIZE = 20;
+
 /* ─── State ─── */
 const S = {
   users: [],
-  mode: 'courses',   // 'courses' | 'lps'
+  mode: 'courses',      // 'courses' | 'lps'
+  groupBy: 'loc',       // 'loc' | 'dept'
   threshold: 0.75,
-  expanded: new Set(),
+  indivPage: 0,
   rawFile: null,
-  locList: [],       // ordered list of location names for onclick index lookup
 };
 
 /* ─── Accessors ─── */
@@ -370,19 +405,14 @@ function assigned(u)  { return S.mode === 'courses' ? u.ca : u.la; }
 function completed(u) { return S.mode === 'courses' ? u.cc : u.lc; }
 function eligible(u)  { return assigned(u) > 0; }
 function rate(u)      { const a = assigned(u); return a ? completed(u) / a : 0; }
-function label()      { return S.mode === 'courses' ? 'course' : 'LP'; }
 function labelPlural(){ return S.mode === 'courses' ? 'courses' : 'LPs'; }
+function groupKey(u)  { return (S.groupBy === 'loc' ? u.loc : u.dept) || '(Unassigned)'; }
 
 /* ─── Utilities ─── */
 function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function pct(n, d) { return d ? Math.round((n / d) * 100) : 0; }
-function fmtTime(secs) {
-  if (!secs || secs < 60) return '—';
-  const h = Math.floor(secs / 3600), m = Math.floor((secs % 3600) / 60);
-  return h ? `${h}h ${m}m` : `${m}m`;
-}
 
 /* ─── Pill colour ─── */
 function pctPill(val, total) {
@@ -391,152 +421,150 @@ function pctPill(val, total) {
   return `<span class="pct-pill ${cls}">${p}%</span> <span class="mono" style="color:rgba(38,49,76,0.4);font-size:0.72rem;">${val}/${total}</span>`;
 }
 
-/* ─── Group by location ─── */
-function byLocation() {
-  const map = {};
-  S.users.forEach(u => {
-    const loc = u.loc || '(No Location)';
-    if (!map[loc]) map[loc] = [];
-    map[loc].push(u);
-  });
-  return map;
-}
-
-/* ─── Location stats ─── */
-function locStats(users) {
-  const el   = users.filter(eligible);
-  const total = el.length;
+/* ─── Group stats ─── */
+function groupStats(users) {
+  const el      = users.filter(eligible);
+  const total   = el.length;
   const started = S.mode === 'courses'
     ? el.filter(u => u.started === 1).length
     : el.filter(u => u.lc > 0).length;
   const hit  = el.filter(u => rate(u) >= S.threshold).length;
   const done = el.filter(u => assigned(u) > 0 && completed(u) >= assigned(u)).length;
-  const avgAssigned = total
-    ? (el.reduce((s, u) => s + assigned(u), 0) / total).toFixed(1)
-    : 0;
-  return { total, started, hit, done, avgAssigned };
+  return { total, started, hit, done };
 }
 
 /* ─── Render all ─── */
 function renderAll() {
-  renderLocTable();
-  renderAssignCard();
-  updateSubtitles();
+  renderGroupTable();
+  renderIndivTable();
+  updateLabels();
 }
 
-function updateSubtitles() {
-  document.getElementById('th-hit').textContent = `Hit ${Math.round(S.threshold * 100)}%`;
-  document.getElementById('assign-title').textContent =
-    `${S.mode === 'courses' ? 'Courses' : 'Learning Paths'} Assigned per Person`;
+function updateLabels() {
+  const thr = Math.round(S.threshold * 100);
+  document.getElementById('th-hit').textContent = `Hit ${thr}%`;
+  document.getElementById('th-grp-name').textContent = S.groupBy === 'loc' ? 'Location' : 'Department';
+  document.getElementById('grp-card-title').textContent = S.groupBy === 'loc' ? 'Location Performance' : 'Department Performance';
+  document.getElementById('th-indiv-assigned').textContent = S.mode === 'courses' ? 'Courses Assigned' : 'LPs Assigned';
 }
 
-/* ─── Location table ─── */
-function renderLocTable() {
-  const map  = byLocation();
-  const locs = Object.keys(map).sort((a, b) => {
-    const sa = locStats(map[a]), sb = locStats(map[b]);
+/* ─── Group table ─── */
+function renderGroupTable() {
+  const map = {};
+  S.users.forEach(u => {
+    const k = groupKey(u);
+    if (!map[k]) map[k] = [];
+    map[k].push(u);
+  });
+
+  const keys = Object.keys(map).sort((a, b) => {
+    const sa = groupStats(map[a]), sb = groupStats(map[b]);
     return pct(sb.hit, sb.total) - pct(sa.hit, sa.total);
   });
 
-  S.locList = locs; // store for onclick index lookup
-  document.getElementById('loc-count-badge').textContent = locs.length + ' locations';
+  document.getElementById('grp-count-badge').textContent =
+    keys.length + (S.groupBy === 'loc' ? ' locations' : ' departments');
 
   let html = '';
-  locs.forEach((loc, idx) => {
-    const users = map[loc];
-    const st = locStats(users);
-    const isExp = S.expanded.has(loc);
-    const expCls = isExp ? ' expanded' : '';
-
-    html += `<tr class="loc-row${expCls}" onclick="toggleLoc(${idx})" style="cursor:pointer">
-      <td><span class="loc-name">${esc(loc)}</span><span class="expand-icon">▾</span></td>
+  keys.forEach(k => {
+    const st = groupStats(map[k]);
+    html += `<tr>
+      <td><span class="grp-name">${esc(k)}</span></td>
       <td class="r mono">${st.total}</td>
       <td class="r">${pctPill(st.started, st.total)}</td>
       <td class="r">${pctPill(st.hit, st.total)}</td>
       <td class="r">${pctPill(st.done, st.total)}</td>
     </tr>`;
-
-    if (isExp) {
-      // sub-header
-      html += `<tr class="sub-row">
-        <td style="padding-left:2.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Person</td>
-        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);" colspan="2">Progress</td>
-        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Hit ${Math.round(S.threshold*100)}%</td>
-        <td class="r" style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:rgba(38,49,76,0.4);">Completed</td>
-      </tr>`;
-
-      // sort individuals by completion rate desc
-      const sorted = [...users].filter(eligible).sort((a, b) => rate(b) - rate(a));
-      sorted.forEach(u => {
-        const a = assigned(u), c = completed(u);
-        const p = pct(c, a);
-        const barCls = p >= Math.round(S.threshold * 100) ? '' : p >= 40 ? ' warn' : ' low';
-        const hitMark = rate(u) >= S.threshold
-          ? `<span class="chk">✓</span>`
-          : `<span class="dash">—</span>`;
-        const doneMark = (a > 0 && c >= a)
-          ? `<span class="chk">✓</span>`
-          : `<span class="dash">—</span>`;
-
-        html += `<tr class="sub-row">
-          <td>
-            <div class="sub-name">${esc(u.name)}</div>
-            <div class="sub-meta">${esc(u.dept || '')}${u.dept && u.role ? ' · ' : ''}${esc(u.role || '')}</div>
-          </td>
-          <td colspan="2">
-            <div class="prog-wrap">
-              <div class="prog-bar"><div class="prog-fill${barCls}" style="width:${p}%"></div></div>
-              <span class="prog-pct">${c}/${a}</span>
-            </div>
-          </td>
-          <td class="r">${hitMark}</td>
-          <td class="r">${doneMark}</td>
-        </tr>`;
-      });
-
-      // users with nothing assigned
-      const unassigned = users.filter(u => !eligible(u));
-      if (unassigned.length) {
-        html += `<tr class="sub-row">
-          <td colspan="5" style="padding-left:2.5rem;font-size:0.75rem;color:rgba(38,49,76,0.35);">
-            ${unassigned.length} person${unassigned.length > 1 ? 's' : ''} with no ${labelPlural()} assigned
-          </td>
-        </tr>`;
-      }
-    }
   });
 
   if (!html) html = `<tr><td colspan="5" class="empty">No data to show.</td></tr>`;
-  document.getElementById('loc-tbody').innerHTML = html;
+  document.getElementById('grp-tbody').innerHTML = html;
 }
 
-/* ─── Toggle expand ─── */
-function toggleLoc(idx) {
-  const loc = S.locList[idx];
-  if (!loc) return;
-  if (S.expanded.has(loc)) S.expanded.delete(loc);
-  else S.expanded.add(loc);
-  renderLocTable();
-}
+/* ─── Individual table ─── */
+function renderIndivTable() {
+  const eligible_users = S.users.filter(eligible);
+  const total = eligible_users.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (S.indivPage >= totalPages) S.indivPage = totalPages - 1;
 
-/* ─── Assignments card ─── */
-function renderAssignCard() {
-  const map  = byLocation();
-  const locs = Object.keys(map).sort();
-  const maxAvg = Math.max(...locs.map(l => parseFloat(locStats(map[l]).avgAssigned) || 0));
+  const start = S.indivPage * PAGE_SIZE;
+  const page  = eligible_users.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('indiv-count-badge').textContent = total + ' people';
+  document.getElementById('indiv-card-sub').textContent =
+    `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
 
   let html = '';
-  locs.forEach(loc => {
-    const st  = locStats(map[loc]);
-    const barW = maxAvg ? Math.round((parseFloat(st.avgAssigned) / maxAvg) * 100) : 0;
-    html += `<div class="assign-row">
-      <span class="assign-loc">${esc(loc)}</span>
-      <div class="assign-bar-wrap"><div class="assign-bar-fill" style="width:${barW}%"></div></div>
-      <span class="assign-val">${st.avgAssigned} ${labelPlural()}</span>
-    </div>`;
+  page.forEach(u => {
+    const a  = assigned(u);
+    const c  = completed(u);
+    const p  = pct(c, a);
+    const barCls = p >= Math.round(S.threshold * 100) ? '' : p >= 40 ? ' warn' : ' low';
+    const startedMark = u.started === 1
+      ? `<span class="chk">&#10003;</span>`
+      : `<span class="dash">—</span>`;
+
+    html += `<tr>
+      <td style="font-weight:500;">${esc(u.name)}</td>
+      <td style="color:rgba(38,49,76,0.65);">${esc(u.loc || '—')}</td>
+      <td style="color:rgba(38,49,76,0.65);">${esc(u.dept || '—')}</td>
+      <td class="r mono">${a}</td>
+      <td class="r">${startedMark}</td>
+      <td class="r">
+        <div class="prog-wrap" style="justify-content:flex-end;">
+          <div class="prog-bar" style="max-width:80px;"><div class="prog-fill${barCls}" style="width:${p}%"></div></div>
+          <span class="prog-pct">${p}%</span>
+        </div>
+      </td>
+    </tr>`;
   });
 
-  document.getElementById('assign-body').innerHTML = html || `<div class="empty">No data.</div>`;
+  if (!html) html = `<tr><td colspan="6" class="empty">No data to show.</td></tr>`;
+  document.getElementById('indiv-tbody').innerHTML = html;
+
+  renderPagination(totalPages);
+}
+
+/* ─── Pagination ─── */
+function renderPagination(totalPages) {
+  const cur  = S.indivPage;
+  const total = S.users.filter(eligible).length;
+  const start = cur * PAGE_SIZE + 1;
+  const end   = Math.min((cur + 1) * PAGE_SIZE, total);
+
+  let pages = '';
+  // show at most 7 page buttons with ellipsis
+  const range = [];
+  for (let i = 0; i < totalPages; i++) {
+    if (i === 0 || i === totalPages - 1 || (i >= cur - 2 && i <= cur + 2)) range.push(i);
+    else if (range[range.length - 1] !== '…') range.push('…');
+  }
+  range.forEach(i => {
+    if (i === '…') {
+      pages += `<span style="font-size:0.72rem;color:rgba(38,49,76,0.35);padding:0 0.15rem;">…</span>`;
+    } else {
+      const active = i === cur ? ' active' : '';
+      pages += `<button class="page-btn${active}" onclick="goPage(${i})">${i + 1}</button>`;
+    }
+  });
+
+  document.getElementById('indiv-pagination').innerHTML = `
+    <span class="pagination-info">${start}–${end} of ${total}</span>
+    <div class="page-btns">
+      <button class="page-btn arrow" onclick="goPage(${cur - 1})" ${cur === 0 ? 'disabled' : ''}>&#8592;</button>
+      ${pages}
+      <button class="page-btn arrow" onclick="goPage(${cur + 1})" ${cur >= totalPages - 1 ? 'disabled' : ''}>&#8594;</button>
+    </div>
+  `;
+}
+
+function goPage(p) {
+  const totalPages = Math.ceil(S.users.filter(eligible).length / PAGE_SIZE);
+  if (p < 0 || p >= totalPages) return;
+  S.indivPage = p;
+  renderIndivTable();
+  document.getElementById('indiv-tbody').closest('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ─── Mode toggle ─── */
@@ -544,7 +572,15 @@ function setMode(mode) {
   S.mode = mode;
   document.getElementById('pill-courses').classList.toggle('active', mode === 'courses');
   document.getElementById('pill-lps').classList.toggle('active', mode === 'lps');
-  S.expanded.clear();
+  S.indivPage = 0;
+  renderAll();
+}
+
+/* ─── Group-by toggle ─── */
+function setGroupBy(key) {
+  S.groupBy = key;
+  document.getElementById('tab-loc').classList.toggle('active', key === 'loc');
+  document.getElementById('tab-dept').classList.toggle('active', key === 'dept');
   renderAll();
 }
 
@@ -578,8 +614,7 @@ function processData() {
   Papa.parse(S.rawFile, {
     header: true, skipEmptyLines: true, dynamicTyping: false,
     complete: function(res) {
-      const rows = res.data;
-      S.users = rows.map(r => ({
+      S.users = res.data.map(r => ({
         name:    (r['Name'] || r['name'] || '').trim(),
         email:   (r['Email'] || r['email'] || '').trim(),
         loc:     (r['Base Location'] || r['base_location'] || '').trim(),
@@ -594,10 +629,12 @@ function processData() {
         active:  parseInt(r['active_user'] || 0, 10),
       })).filter(u => u.name);
 
-      document.getElementById('hdr-status').textContent = `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}`;
+      document.getElementById('hdr-status').textContent =
+        `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}`;
       document.getElementById('upload-section').style.display = 'none';
       document.getElementById('dashboard').classList.add('visible');
       document.getElementById('filter-bar').classList.add('visible');
+      S.indivPage = 0;
       renderAll();
     },
     error: function(err) { alert('Error parsing CSV: ' + err.message); }
@@ -613,9 +650,8 @@ function showUpload() {
   document.getElementById('process-btn').disabled = true;
   document.getElementById('fname').textContent = '';
   document.getElementById('upzone').classList.remove('loaded');
-  S.users = []; S.expanded.clear();
-  const fi = document.getElementById('file-input');
-  fi.value = '';
+  S.users = []; S.indivPage = 0;
+  document.getElementById('file-input').value = '';
 }
 </script>
 </body>
