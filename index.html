@@ -301,26 +301,12 @@
     <div class="ain d2" style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;text-align:left;">
       <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(38,49,76,0.45);margin-bottom:0.65rem;">How to prepare this file</div>
       <ol style="margin:0;padding-left:1.2rem;font-size:0.84rem;color:rgba(38,49,76,0.75);line-height:1.75;">
-        <li>Export the <strong>User Summary</strong> report from <strong>Kredo LMS</strong></li>
-        <li>Open it in Excel and add two columns: <strong>Base Location</strong> and <strong>Dept</strong></li>
-        <li>Save as <strong>.csv</strong> and upload below</li>
+        <li>Go to <strong>Kredo LMS → Reports</strong> and export the <strong>User Summary</strong> report</li>
+        <li>Make sure <strong>Base Location</strong> and <strong>Dept</strong> columns are filled in for every person</li>
+        <li>Save as <strong>.csv</strong> and drop it below — no other changes needed</li>
       </ol>
-      <div style="margin-top:0.85rem;padding-top:0.75rem;border-top:1px solid var(--border);">
-        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:rgba(38,49,76,0.4);margin-bottom:0.45rem;">Required columns</div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">Name</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">Email</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(255,194,14,0.15);border:1px solid rgba(255,194,14,0.4);border-radius:4px;padding:0.15rem 0.45rem;color:#8a6300;">Base Location</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(255,194,14,0.15);border:1px solid rgba(255,194,14,0.4);border-radius:4px;padding:0.15rem 0.45rem;color:#8a6300;">Dept</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">course_assigned</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">course_completed</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">lp_assigned</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">lp_completed</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">Total Time Spent(In Secs)</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">started_any</span>
-          <span style="font-family:'Spline Sans Mono',monospace;font-size:0.73rem;background:rgba(39,189,190,0.08);border:1px solid rgba(39,189,190,0.22);border-radius:4px;padding:0.15rem 0.45rem;color:#1a8f90;">active_user</span>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.77rem;color:rgba(38,49,76,0.45);">Gold = columns you add manually &nbsp;·&nbsp; Teal = already in the Kredo export</div>
+      <div style="margin-top:0.85rem;padding-top:0.75rem;border-top:1px solid var(--border);font-size:0.77rem;color:rgba(38,49,76,0.45);">
+        The dashboard reads the Kredo export directly. Courses and learning paths in <code style="font-family:'Spline Sans Mono',monospace;background:rgba(38,49,76,0.06);padding:0.1rem 0.3rem;border-radius:3px;">19/24</code> format are handled automatically.
       </div>
     </div>
 
@@ -707,26 +693,59 @@ function updateUploadUI(file) {
   document.getElementById('process-btn').disabled = false;
 }
 
+/* ─── Parse "completed/assigned" cell e.g. "19/24" ─── */
+function parseSlash(val) {
+  const s = String(val || '0/0');
+  const parts = s.split('/');
+  return {
+    completed: parseInt(parts[0] || 0, 10),
+    assigned:  parseInt(parts[1] || 0, 10),
+  };
+}
+
 /* ─── Process CSV ─── */
 function processData() {
   if (!S.rawFile) return;
   Papa.parse(S.rawFile, {
     header: true, skipEmptyLines: true, dynamicTyping: false,
     complete(res) {
-      S.users = res.data.map(r => ({
-        name:    (r['Name']          || r['name']          || '').trim(),
-        email:   (r['Email']         || r['email']         || '').trim(),
-        loc:     (r['Base Location'] || r['base_location'] || '').trim(),
-        dept:    (r['Dept']          || r['dept']          || '').trim(),
-        role:    (r['Job Role']      || r['job_role']      || '').trim(),
-        ca:      parseInt(r['course_assigned']  || 0, 10),
-        cc:      parseInt(r['course_completed'] || 0, 10),
-        la:      parseInt(r['lp_assigned']      || 0, 10),
-        lc:      parseInt(r['lp_completed']     || 0, 10),
-        secs:    parseInt(r['Total Time Spent(In Secs)'] || 0, 10),
-        started: parseInt(r['started_any']  || 0, 10),
-        active:  parseInt(r['active_user']  || 0, 10),
-      })).filter(u => u.name);
+      const rows = res.data;
+      // Detect format: Kredo native ("Course Completed/Assigned") vs pre-processed
+      const isKredo = rows.length > 0 && 'Course Completed/Assigned' in rows[0];
+
+      S.users = rows.map(r => {
+        let ca, cc, la, lc, started, active;
+
+        if (isKredo) {
+          const course = parseSlash(r['Course Completed/Assigned']);
+          const lp     = parseSlash(r['Learning Path Completed/Assigned']);
+          ca      = course.assigned;
+          cc      = course.completed;
+          la      = lp.assigned;
+          lc      = lp.completed;
+          const secs = parseInt(r['Total Time Spent(In Secs)'] || 0, 10);
+          // started = has spent any time OR completed at least one course/LP
+          started = (secs > 0 || cc > 0 || lc > 0) ? 1 : 0;
+          active  = (String(r['Active'] || '').toUpperCase() === 'TRUE') ? 1 : 0;
+        } else {
+          ca      = parseInt(r['course_assigned']  || 0, 10);
+          cc      = parseInt(r['course_completed'] || 0, 10);
+          la      = parseInt(r['lp_assigned']      || 0, 10);
+          lc      = parseInt(r['lp_completed']     || 0, 10);
+          started = parseInt(r['started_any']  || 0, 10);
+          active  = parseInt(r['active_user']  || 0, 10);
+        }
+
+        return {
+          name:  (r['Name']          || r['name']          || '').trim(),
+          email: (r['Email']         || r['email']         || '').trim(),
+          loc:   (r['Base Location'] || r['base_location'] || '').trim(),
+          dept:  (r['Dept']          || r['dept']          || '').trim(),
+          role:  (r['Job Role']      || r['job_role']      || '').trim(),
+          secs:  parseInt(r['Total Time Spent(In Secs)'] || 0, 10),
+          ca, cc, la, lc, started, active,
+        };
+      }).filter(u => u.name);
 
       document.getElementById('hdr-status').textContent =
         `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}`;
