@@ -82,18 +82,6 @@
   }
   .fbar-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 
-  /* ── Tab group (Location / Department) ── */
-  .tab-group { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
-  .tab-btn {
-    border: none; background: transparent; cursor: pointer;
-    padding: 0.25rem 0.85rem; height: 48px;
-    font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
-    color: rgba(38,49,76,0.45); transition: color 0.15s;
-    border-bottom: 2px solid transparent; white-space: nowrap;
-  }
-  .tab-btn.active { color: var(--navy); border-bottom-color: var(--teal); }
-  .tab-btn:hover:not(.active) { color: var(--navy); }
-
   /* ── Toggle Pills ── */
   .toggle-group { display: flex; background: rgba(38,49,76,0.06); border-radius: 6px; padding: 2px; gap: 2px; flex-shrink: 0; }
   .tpill {
@@ -154,7 +142,6 @@
   }
   .card-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
   .card-sub   { font-size: 0.72rem; color: rgba(38,49,76,0.5); margin-top: 0.1rem; }
-  .card-bd    { padding: 0; }
 
   /* ── Table ── */
   .tbl-wrap { overflow-x: auto; }
@@ -165,7 +152,10 @@
     font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em;
     padding: 0.6rem 0.9rem; text-align: left;
     border-bottom: 1px solid var(--border); white-space: nowrap;
+    cursor: pointer; user-select: none;
+    transition: background 0.12s;
   }
+  .tbl th:hover { background: rgba(38,49,76,0.05); color: var(--navy); }
   .tbl th.r { text-align: right; }
   .tbl td {
     padding: 0.65rem 0.9rem;
@@ -174,10 +164,46 @@
   }
   .tbl td.r { text-align: right; }
   .tbl tr:last-child td { border-bottom: none; }
-  .tbl tbody tr:hover td { background: rgba(39,189,190,0.025); }
 
-  /* ── Group name cell ── */
-  .grp-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; }
+  /* ── Sort icon ── */
+  .si {
+    display: inline-block; margin-left: 0.3rem;
+    font-size: 0.62rem; color: rgba(38,49,76,0.3);
+    vertical-align: middle; line-height: 1;
+    font-style: normal;
+  }
+  .si.on { color: var(--teal); }
+
+  /* ── Location row (clickable) ── */
+  .loc-row { cursor: pointer; transition: background 0.1s; }
+  .loc-row:hover td { background: rgba(39,189,190,0.03); }
+  .loc-row.expanded td { background: rgba(39,189,190,0.04); }
+  .loc-name { font-weight: 600; color: var(--navy); font-size: 0.85rem; }
+  .expand-chevron {
+    display: inline-block; margin-left: 0.4rem;
+    font-size: 0.65rem; color: rgba(38,49,76,0.3);
+    transition: transform 0.2s; vertical-align: middle;
+  }
+  .loc-row.expanded .expand-chevron { transform: rotate(180deg); }
+
+  /* ── Dept sub-rows ── */
+  .dept-row td {
+    background: rgba(39,189,190,0.025);
+    border-bottom: 1px solid rgba(39,189,190,0.07);
+    padding: 0.5rem 0.9rem;
+    font-size: 0.79rem;
+  }
+  .dept-row:last-of-type td { border-bottom: 1px solid rgba(38,49,76,0.06); }
+  .dept-row td:first-child { padding-left: 2.25rem; }
+  .dept-label {
+    color: rgba(38,49,76,0.65); font-weight: 500;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .dept-label::before {
+    content: '└';
+    color: rgba(38,49,76,0.2);
+    font-size: 0.75rem;
+  }
 
   /* ── Mono numbers ── */
   .mono { font-family: var(--font-mono); font-size: 0.8rem; }
@@ -229,9 +255,8 @@
   .page-btn:hover:not(:disabled):not(.active) { border-color: var(--navy); color: var(--navy); }
   .page-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); cursor: default; }
   .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .page-btn.arrow { font-size: 0.65rem; }
 
-  /* ── Empty state ── */
+  /* ── Empty ── */
   .empty { text-align: center; padding: 2.5rem; color: rgba(38,49,76,0.35); font-size: 0.82rem; }
 </style>
 </head>
@@ -253,13 +278,6 @@
 
 <!-- ── Filter Bar ── -->
 <div id="filter-bar">
-  <!-- Group-by tabs -->
-  <div class="tab-group">
-    <button class="tab-btn active" id="tab-loc"  onclick="setGroupBy('loc')">By Location</button>
-    <button class="tab-btn"        id="tab-dept" onclick="setGroupBy('dept')">By Department</button>
-  </div>
-  <div class="fbar-divider"></div>
-  <!-- Courses / LPs toggle -->
   <div class="toggle-group">
     <button class="tpill active" id="pill-courses" onclick="setMode('courses')">Courses</button>
     <button class="tpill"        id="pill-lps"     onclick="setMode('lps')">Learning Paths</button>
@@ -281,7 +299,7 @@
     <p class="upload-sub ain d1" style="text-align:center;">Drop the <strong>LMS User Metrics Report.csv</strong> to generate the analytics dashboard.</p>
 
     <div class="ain d2" style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;text-align:left;">
-      <div style="font-family:'Instrument Sans',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(38,49,76,0.45);margin-bottom:0.65rem;">How to prepare this file</div>
+      <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(38,49,76,0.45);margin-bottom:0.65rem;">How to prepare this file</div>
       <ol style="margin:0;padding-left:1.2rem;font-size:0.84rem;color:rgba(38,49,76,0.75);line-height:1.75;">
         <li>Export the <strong>User Summary</strong> report from <strong>Kredo LMS</strong></li>
         <li>Open it in Excel and add two columns: <strong>Base Location</strong> and <strong>Dept</strong></li>
@@ -328,60 +346,56 @@
 <div id="dashboard">
   <div id="main-container">
 
-    <!-- Group Performance -->
+    <!-- Location Performance -->
     <div class="card ain">
       <div class="card-hd">
         <div>
-          <div class="card-title" id="grp-card-title">Location Performance</div>
-          <div class="card-sub">Sorted by pass rate — highest first</div>
+          <div class="card-title">Location Performance</div>
+          <div class="card-sub">Click any location to see its departments &nbsp;·&nbsp; Click column headers to sort</div>
         </div>
         <span class="cnt-badge" id="grp-count-badge"></span>
       </div>
-      <div class="card-bd">
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th id="th-grp-name">Location</th>
-                <th class="r">Total</th>
-                <th class="r">Started</th>
-                <th class="r" id="th-hit">Hit 75%</th>
-                <th class="r">Completed 100%</th>
-              </tr>
-            </thead>
-            <tbody id="grp-tbody"></tbody>
-          </table>
-        </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th onclick="sortGrp('name')">Location <i class="si" id="si-grp-name">↕</i></th>
+              <th class="r" onclick="sortGrp('total')">Total <i class="si" id="si-grp-total">↕</i></th>
+              <th class="r" onclick="sortGrp('started')">Started <i class="si" id="si-grp-started">↕</i></th>
+              <th class="r" onclick="sortGrp('hit')"><span id="th-hit">Hit 75%</span> <i class="si" id="si-grp-hit">↕</i></th>
+              <th class="r" onclick="sortGrp('done')">Completed 100% <i class="si" id="si-grp-done">↕</i></th>
+            </tr>
+          </thead>
+          <tbody id="grp-tbody"></tbody>
+        </table>
       </div>
     </div>
 
-    <!-- Individual Users -->
+    <!-- All People -->
     <div class="card ain d1">
       <div class="card-hd">
         <div>
           <div class="card-title">All People</div>
-          <div class="card-sub" id="indiv-card-sub"></div>
+          <div class="card-sub" id="indiv-sub">Click column headers to sort</div>
         </div>
-        <span class="cnt-badge" id="indiv-count-badge"></span>
+        <span class="cnt-badge" id="indiv-badge"></span>
       </div>
-      <div class="card-bd">
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Department</th>
-                <th class="r" id="th-indiv-assigned">Courses Assigned</th>
-                <th class="r">Has Started</th>
-                <th class="r">% Finished</th>
-              </tr>
-            </thead>
-            <tbody id="indiv-tbody"></tbody>
-          </table>
-        </div>
-        <div class="pagination" id="indiv-pagination"></div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th onclick="sortIndiv('name')">Name <i class="si" id="si-indiv-name">↕</i></th>
+              <th onclick="sortIndiv('loc')">Location <i class="si" id="si-indiv-loc">↕</i></th>
+              <th onclick="sortIndiv('dept')">Department <i class="si" id="si-indiv-dept">↕</i></th>
+              <th class="r" onclick="sortIndiv('assigned')"><span id="th-assigned">Courses Assigned</span> <i class="si" id="si-indiv-assigned">↕</i></th>
+              <th class="r" onclick="sortIndiv('started')">Has Started <i class="si" id="si-indiv-started">↕</i></th>
+              <th class="r" onclick="sortIndiv('pct')">% Finished <i class="si" id="si-indiv-pct">↕</i></th>
+            </tr>
+          </thead>
+          <tbody id="indiv-tbody"></tbody>
+        </table>
       </div>
+      <div class="pagination" id="indiv-pagination"></div>
     </div>
 
   </div>
@@ -392,21 +406,23 @@ const PAGE_SIZE = 20;
 
 /* ─── State ─── */
 const S = {
-  users: [],
-  mode: 'courses',      // 'courses' | 'lps'
-  groupBy: 'loc',       // 'loc' | 'dept'
-  threshold: 0.75,
-  indivPage: 0,
-  rawFile: null,
+  users:      [],
+  mode:       'courses',
+  threshold:  0.75,
+  expanded:   new Set(),
+  locList:    [],
+  indivPage:  0,
+  grpSort:    { col: 'hit',  dir: 'desc' },
+  indivSort:  { col: 'name', dir: 'asc'  },
+  rawFile:    null,
 };
 
 /* ─── Accessors ─── */
-function assigned(u)  { return S.mode === 'courses' ? u.ca : u.la; }
-function completed(u) { return S.mode === 'courses' ? u.cc : u.lc; }
-function eligible(u)  { return assigned(u) > 0; }
-function rate(u)      { const a = assigned(u); return a ? completed(u) / a : 0; }
-function labelPlural(){ return S.mode === 'courses' ? 'courses' : 'LPs'; }
-function groupKey(u)  { return (S.groupBy === 'loc' ? u.loc : u.dept) || '(Unassigned)'; }
+function assigned(u)   { return S.mode === 'courses' ? u.ca : u.la; }
+function completed(u)  { return S.mode === 'courses' ? u.cc : u.lc; }
+function eligible(u)   { return assigned(u) > 0; }
+function rate(u)       { const a = assigned(u); return a ? completed(u) / a : 0; }
+function labelPlural() { return S.mode === 'courses' ? 'courses' : 'LPs'; }
 
 /* ─── Utilities ─── */
 function esc(s) {
@@ -414,7 +430,6 @@ function esc(s) {
 }
 function pct(n, d) { return d ? Math.round((n / d) * 100) : 0; }
 
-/* ─── Pill colour ─── */
 function pctPill(val, total) {
   const p = pct(val, total);
   const cls = p >= 70 ? 'pct-hi' : p >= 40 ? 'pct-md' : 'pct-lo';
@@ -422,7 +437,7 @@ function pctPill(val, total) {
 }
 
 /* ─── Group stats ─── */
-function groupStats(users) {
+function grpStats(users) {
   const el      = users.filter(eligible);
   const total   = el.length;
   const started = S.mode === 'courses'
@@ -435,65 +450,130 @@ function groupStats(users) {
 
 /* ─── Render all ─── */
 function renderAll() {
-  renderGroupTable();
+  document.getElementById('th-hit').textContent = `Hit ${Math.round(S.threshold * 100)}%`;
+  document.getElementById('th-assigned').textContent = S.mode === 'courses' ? 'Courses Assigned' : 'LPs Assigned';
+  renderGrpTable();
   renderIndivTable();
-  updateLabels();
 }
 
-function updateLabels() {
-  const thr = Math.round(S.threshold * 100);
-  document.getElementById('th-hit').textContent = `Hit ${thr}%`;
-  document.getElementById('th-grp-name').textContent = S.groupBy === 'loc' ? 'Location' : 'Department';
-  document.getElementById('grp-card-title').textContent = S.groupBy === 'loc' ? 'Location Performance' : 'Department Performance';
-  document.getElementById('th-indiv-assigned').textContent = S.mode === 'courses' ? 'Courses Assigned' : 'LPs Assigned';
-}
-
-/* ─── Group table ─── */
-function renderGroupTable() {
+/* ─── Location / dept table ─── */
+function renderGrpTable() {
   const map = {};
   S.users.forEach(u => {
-    const k = groupKey(u);
+    const k = u.loc || '(No Location)';
     if (!map[k]) map[k] = [];
     map[k].push(u);
   });
 
-  const keys = Object.keys(map).sort((a, b) => {
-    const sa = groupStats(map[a]), sb = groupStats(map[b]);
-    return pct(sb.hit, sb.total) - pct(sa.hit, sa.total);
+  let locs = Object.keys(map);
+
+  // sort locations
+  const { col, dir } = S.grpSort;
+  const d = dir === 'asc' ? 1 : -1;
+  locs.sort((a, b) => {
+    const sa = grpStats(map[a]), sb = grpStats(map[b]);
+    switch (col) {
+      case 'name':    return d * a.localeCompare(b);
+      case 'total':   return d * (sa.total - sb.total);
+      case 'started': return d * (pct(sa.started, sa.total) - pct(sb.started, sb.total));
+      case 'hit':     return d * (pct(sa.hit, sa.total)     - pct(sb.hit, sb.total));
+      case 'done':    return d * (pct(sa.done, sa.total)    - pct(sb.done, sb.total));
+      default: return 0;
+    }
   });
 
-  document.getElementById('grp-count-badge').textContent =
-    keys.length + (S.groupBy === 'loc' ? ' locations' : ' departments');
+  S.locList = locs;
+  document.getElementById('grp-count-badge').textContent = locs.length + ' locations';
 
   let html = '';
-  keys.forEach(k => {
-    const st = groupStats(map[k]);
-    html += `<tr>
-      <td><span class="grp-name">${esc(k)}</span></td>
+  locs.forEach((loc, idx) => {
+    const st     = grpStats(map[loc]);
+    const isExp  = S.expanded.has(loc);
+    const expCls = isExp ? ' expanded' : '';
+
+    html += `<tr class="loc-row${expCls}" onclick="toggleLoc(${idx})">
+      <td><span class="loc-name">${esc(loc)}</span><span class="expand-chevron">&#9660;</span></td>
       <td class="r mono">${st.total}</td>
       <td class="r">${pctPill(st.started, st.total)}</td>
       <td class="r">${pctPill(st.hit, st.total)}</td>
       <td class="r">${pctPill(st.done, st.total)}</td>
     </tr>`;
+
+    if (isExp) {
+      // group by dept within this location
+      const dmap = {};
+      map[loc].forEach(u => {
+        const dk = u.dept || '(No Dept)';
+        if (!dmap[dk]) dmap[dk] = [];
+        dmap[dk].push(u);
+      });
+
+      const depts = Object.keys(dmap).sort();
+      depts.forEach(dept => {
+        const ds = grpStats(dmap[dept]);
+        html += `<tr class="dept-row">
+          <td><span class="dept-label">${esc(dept)}</span></td>
+          <td class="r mono">${ds.total}</td>
+          <td class="r">${pctPill(ds.started, ds.total)}</td>
+          <td class="r">${pctPill(ds.hit, ds.total)}</td>
+          <td class="r">${pctPill(ds.done, ds.total)}</td>
+        </tr>`;
+      });
+    }
   });
 
-  if (!html) html = `<tr><td colspan="5" class="empty">No data to show.</td></tr>`;
+  if (!html) html = `<tr><td colspan="5" class="empty">No data.</td></tr>`;
   document.getElementById('grp-tbody').innerHTML = html;
+  updateSortIcons();
+}
+
+function toggleLoc(idx) {
+  const loc = S.locList[idx];
+  if (!loc) return;
+  if (S.expanded.has(loc)) S.expanded.delete(loc);
+  else S.expanded.add(loc);
+  renderGrpTable();
+}
+
+/* ─── Sort — group table ─── */
+function sortGrp(col) {
+  if (S.grpSort.col === col) {
+    S.grpSort.dir = S.grpSort.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    S.grpSort.col = col;
+    S.grpSort.dir = col === 'name' ? 'asc' : 'desc';
+  }
+  renderGrpTable();
 }
 
 /* ─── Individual table ─── */
 function renderIndivTable() {
-  const eligible_users = S.users.filter(eligible);
-  const total = eligible_users.length;
+  const all = S.users.filter(eligible);
+
+  const { col, dir } = S.indivSort;
+  const d = dir === 'asc' ? 1 : -1;
+  all.sort((a, b) => {
+    switch (col) {
+      case 'name':     return d * (a.name.localeCompare(b.name));
+      case 'loc':      return d * ((a.loc || '').localeCompare(b.loc || ''));
+      case 'dept':     return d * ((a.dept || '').localeCompare(b.dept || ''));
+      case 'assigned': return d * (assigned(a) - assigned(b));
+      case 'started':  return d * (a.started - b.started);
+      case 'pct':      return d * (rate(a) - rate(b));
+      default: return 0;
+    }
+  });
+
+  const total      = all.length;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  if (S.indivPage >= totalPages) S.indivPage = totalPages - 1;
+  if (S.indivPage >= totalPages) S.indivPage = 0;
 
   const start = S.indivPage * PAGE_SIZE;
-  const page  = eligible_users.slice(start, start + PAGE_SIZE);
+  const page  = all.slice(start, start + PAGE_SIZE);
 
-  document.getElementById('indiv-count-badge').textContent = total + ' people';
-  document.getElementById('indiv-card-sub').textContent =
-    `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
+  document.getElementById('indiv-badge').textContent = total + ' people';
+  document.getElementById('indiv-sub').textContent =
+    `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, total)} of ${total} · Click column headers to sort`;
 
   let html = '';
   page.forEach(u => {
@@ -520,43 +600,70 @@ function renderIndivTable() {
     </tr>`;
   });
 
-  if (!html) html = `<tr><td colspan="6" class="empty">No data to show.</td></tr>`;
+  if (!html) html = `<tr><td colspan="6" class="empty">No data.</td></tr>`;
   document.getElementById('indiv-tbody').innerHTML = html;
+  renderPagination(totalPages, total, start);
+  updateSortIcons();
+}
 
-  renderPagination(totalPages);
+/* ─── Sort — individual table ─── */
+function sortIndiv(col) {
+  if (S.indivSort.col === col) {
+    S.indivSort.dir = S.indivSort.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    S.indivSort.col = col;
+    S.indivSort.dir = (col === 'pct' || col === 'assigned' || col === 'started') ? 'desc' : 'asc';
+  }
+  S.indivPage = 0;
+  renderIndivTable();
+}
+
+/* ─── Sort icons ─── */
+function updateSortIcons() {
+  [['grp', ['name','total','started','hit','done']],
+   ['indiv', ['name','loc','dept','assigned','started','pct']]
+  ].forEach(([tbl, cols]) => {
+    const s = tbl === 'grp' ? S.grpSort : S.indivSort;
+    cols.forEach(c => {
+      const el = document.getElementById(`si-${tbl}-${c}`);
+      if (!el) return;
+      if (s.col === c) {
+        el.textContent = s.dir === 'asc' ? '↑' : '↓';
+        el.classList.add('on');
+      } else {
+        el.textContent = '↕';
+        el.classList.remove('on');
+      }
+    });
+  });
 }
 
 /* ─── Pagination ─── */
-function renderPagination(totalPages) {
-  const cur  = S.indivPage;
-  const total = S.users.filter(eligible).length;
-  const start = cur * PAGE_SIZE + 1;
-  const end   = Math.min((cur + 1) * PAGE_SIZE, total);
+function renderPagination(totalPages, total, start) {
+  const cur = S.indivPage;
+  const end = Math.min(start + PAGE_SIZE, total);
 
-  let pages = '';
-  // show at most 7 page buttons with ellipsis
   const range = [];
   for (let i = 0; i < totalPages; i++) {
-    if (i === 0 || i === totalPages - 1 || (i >= cur - 2 && i <= cur + 2)) range.push(i);
-    else if (range[range.length - 1] !== '…') range.push('…');
+    if (i === 0 || i === totalPages - 1 || (i >= cur - 2 && i <= cur + 2))
+      range.push(i);
+    else if (range[range.length - 1] !== '…')
+      range.push('…');
   }
-  range.forEach(i => {
-    if (i === '…') {
-      pages += `<span style="font-size:0.72rem;color:rgba(38,49,76,0.35);padding:0 0.15rem;">…</span>`;
-    } else {
-      const active = i === cur ? ' active' : '';
-      pages += `<button class="page-btn${active}" onclick="goPage(${i})">${i + 1}</button>`;
-    }
-  });
+
+  let pages = range.map(i =>
+    i === '…'
+      ? `<span style="font-size:0.72rem;color:rgba(38,49,76,0.35);padding:0 0.15rem;">…</span>`
+      : `<button class="page-btn${i === cur ? ' active' : ''}" onclick="goPage(${i})">${i + 1}</button>`
+  ).join('');
 
   document.getElementById('indiv-pagination').innerHTML = `
-    <span class="pagination-info">${start}–${end} of ${total}</span>
+    <span class="pagination-info">${start + 1}–${end} of ${total}</span>
     <div class="page-btns">
-      <button class="page-btn arrow" onclick="goPage(${cur - 1})" ${cur === 0 ? 'disabled' : ''}>&#8592;</button>
+      <button class="page-btn" onclick="goPage(${cur - 1})" ${cur === 0 ? 'disabled' : ''}>&#8592;</button>
       ${pages}
-      <button class="page-btn arrow" onclick="goPage(${cur + 1})" ${cur >= totalPages - 1 ? 'disabled' : ''}>&#8594;</button>
-    </div>
-  `;
+      <button class="page-btn" onclick="goPage(${cur + 1})" ${cur >= totalPages - 1 ? 'disabled' : ''}>&#8594;</button>
+    </div>`;
 }
 
 function goPage(p) {
@@ -564,7 +671,7 @@ function goPage(p) {
   if (p < 0 || p >= totalPages) return;
   S.indivPage = p;
   renderIndivTable();
-  document.getElementById('indiv-tbody').closest('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector('#indiv-tbody').closest('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ─── Mode toggle ─── */
@@ -573,14 +680,6 @@ function setMode(mode) {
   document.getElementById('pill-courses').classList.toggle('active', mode === 'courses');
   document.getElementById('pill-lps').classList.toggle('active', mode === 'lps');
   S.indivPage = 0;
-  renderAll();
-}
-
-/* ─── Group-by toggle ─── */
-function setGroupBy(key) {
-  S.groupBy = key;
-  document.getElementById('tab-loc').classList.toggle('active', key === 'loc');
-  document.getElementById('tab-dept').classList.toggle('active', key === 'dept');
   renderAll();
 }
 
@@ -613,31 +712,32 @@ function processData() {
   if (!S.rawFile) return;
   Papa.parse(S.rawFile, {
     header: true, skipEmptyLines: true, dynamicTyping: false,
-    complete: function(res) {
+    complete(res) {
       S.users = res.data.map(r => ({
-        name:    (r['Name'] || r['name'] || '').trim(),
-        email:   (r['Email'] || r['email'] || '').trim(),
+        name:    (r['Name']          || r['name']          || '').trim(),
+        email:   (r['Email']         || r['email']         || '').trim(),
         loc:     (r['Base Location'] || r['base_location'] || '').trim(),
-        dept:    (r['Dept'] || r['dept'] || '').trim(),
-        role:    (r['Job Role'] || r['job_role'] || '').trim(),
-        ca:      parseInt(r['course_assigned'] || 0, 10),
+        dept:    (r['Dept']          || r['dept']          || '').trim(),
+        role:    (r['Job Role']      || r['job_role']      || '').trim(),
+        ca:      parseInt(r['course_assigned']  || 0, 10),
         cc:      parseInt(r['course_completed'] || 0, 10),
-        la:      parseInt(r['lp_assigned'] || 0, 10),
-        lc:      parseInt(r['lp_completed'] || 0, 10),
+        la:      parseInt(r['lp_assigned']      || 0, 10),
+        lc:      parseInt(r['lp_completed']     || 0, 10),
         secs:    parseInt(r['Total Time Spent(In Secs)'] || 0, 10),
-        started: parseInt(r['started_any'] || 0, 10),
-        active:  parseInt(r['active_user'] || 0, 10),
+        started: parseInt(r['started_any']  || 0, 10),
+        active:  parseInt(r['active_user']  || 0, 10),
       })).filter(u => u.name);
 
       document.getElementById('hdr-status').textContent =
-        `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}`;
+        `${S.users.length} people · ${new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}`;
       document.getElementById('upload-section').style.display = 'none';
       document.getElementById('dashboard').classList.add('visible');
       document.getElementById('filter-bar').classList.add('visible');
       S.indivPage = 0;
+      S.expanded.clear();
       renderAll();
     },
-    error: function(err) { alert('Error parsing CSV: ' + err.message); }
+    error(err) { alert('Error parsing CSV: ' + err.message); }
   });
 }
 
@@ -650,8 +750,8 @@ function showUpload() {
   document.getElementById('process-btn').disabled = true;
   document.getElementById('fname').textContent = '';
   document.getElementById('upzone').classList.remove('loaded');
-  S.users = []; S.indivPage = 0;
   document.getElementById('file-input').value = '';
+  S.users = []; S.indivPage = 0; S.expanded.clear();
 }
 </script>
 </body>
